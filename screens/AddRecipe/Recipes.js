@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import React from 'react'
+import { styles } from './Recipes.styles'
 
 const Recipes = () => {
   return (
@@ -10,5 +11,3 @@ const Recipes = () => {
 }
 
 export default Recipes
-
-const styles = StyleSheet.create({})
