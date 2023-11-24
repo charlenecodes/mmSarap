@@ -2,10 +2,10 @@ import { Text, View } from 'react-native'
 import React from 'react'
 import { styles } from './Profile.styles'
 
-const AddRecipe = () => {
+const Profile = () => {
   return (
     <View>
-      <Text>AddRecipe</Text>
+      <Text>Profile</Text>
     </View>
   )
 }

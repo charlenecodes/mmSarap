@@ -15,9 +15,10 @@ import { styles } from './App.styles';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from '../screens/Login/Login';
 import Stacks from '../Navigation/Stacks/Stacks';
+import BottomTab from '../Navigation/BottomTab/BottomTab';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
   
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -36,9 +37,7 @@ function App() {
         // style={backgroundStyle}
       >
         <NavigationContainer>
-          {
-            isLoggedIn ? <Stacks/> : <Login/>
-          }
+          <Login/>
         </NavigationContainer>
       </ScrollView>
     </SafeAreaView>

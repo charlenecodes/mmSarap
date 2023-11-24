@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Recipes from '../../screens/Recipes/AddRecipe';
 import Home from '../../screens/Home/Home';
 import AddRecipe from '../../screens/Recipes/AddRecipe';
+import Profile from '../../screens/Profile/Profile';
 
 const Tab = createBottomTabNavigator();
 
