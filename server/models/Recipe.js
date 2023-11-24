@@ -9,13 +9,24 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ingredients: {
+    ingredients: [{
         type: String,
         required: true
+    }],
+    instructions: [{
+        type: String,
+        required: true
+    }],
+    photos: [{
+        type: String,
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now
     },
-    instructions: {
-        type: String,
-        required: true
+    addedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
     }
 });
 
