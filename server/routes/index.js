@@ -65,7 +65,7 @@ router.post("/register", checkIfEmailExists, checkIfUsernameExists, async (req, 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  // not sure why a plain find was not working here, but findOne does
+  //? not sure why a plain find was not working here, but findOne does
   //^ SOLUTION: find() never returns null so it always executes the catch block
   // https://stackoverflow.com/questions/40168478/find-and-findone-methods-in-mongodb-showing-different-results
   const user = await User.findOne({username});

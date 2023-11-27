@@ -5,13 +5,13 @@ import { useNavigation } from '@react-navigation/native';
 
 
 // enable focus and submit on enter
-const Login = (props) => {
-  console.log(props)
+const Login = () => {
   const [login, setLogin] = useState({
     username: '',
     password: ''
   })
   const navigation = useNavigation()
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,7 +55,7 @@ const Login = (props) => {
             style={styles.options}
           >
             <Pressable
-              onPress={() => navigation.navigate('Register')}
+              onPress={() => navigation.navigate("Register")}
             >
               <View>
                 <Text
@@ -75,7 +75,7 @@ const Login = (props) => {
           </View>
 
           <Pressable
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate("Home")}
           >
             {/* the View is needed to style the area around the text and Pressable only handles onPress */}
             <View
