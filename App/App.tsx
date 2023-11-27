@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -13,13 +13,17 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import { styles } from './App.styles';
 import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from '../screens/Login/Login';
 import Stacks from '../Navigation/Stacks/Stacks';
-import BottomTab from '../Navigation/BottomTab/BottomTab';
+
+const Stack = createNativeStackNavigator();
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
-  
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -27,20 +31,14 @@ function App() {
   };
 
   return (
-    <SafeAreaView>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        // style={backgroundStyle}
-      >
-        <NavigationContainer>
-          <Login/>
-        </NavigationContainer>
-      </ScrollView>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        {isLoggedIn ? <Stacks/> : <Login/>}
+          
+      </NavigationContainer>
+
+    </SafeAreaProvider>
+    
   );
 }
 
