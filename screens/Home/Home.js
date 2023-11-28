@@ -1,27 +1,45 @@
-import { Text, View } from 'react-native';
+import { Text, View, SafeAreaView } from 'react-native';
 import React from 'react';
 import { styles } from './Home.styles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const Home = () => {
-  const insets = useSafeAreaInsets()
+function Home() {
 
   return (
-    <View
-      style={{
-        flex: 1,
-        // justifyContent: 'space-between',
-        alignItems: 'center',
-
-        // Paddings to handle safe area
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
-        paddingLeft: insets.left,
-        paddingRight: insets.right,
-      }}
+    <SafeAreaView
+      style={styles.container}
     >
-      <Text>Home</Text>
-    </View>
+      <Text
+        style={{
+          fontWeight: 'bold',
+          fontSize: 30,
+          paddingBottom: 10,
+          color: '#3A865A'
+        }}
+      >Home</Text>
+
+      <Text
+        style={{
+          fontSize: 18,
+          paddingBottom: 10,
+          color: '#3A865A'
+        }}
+      >Favorites</Text>
+
+      <Text
+        style={{
+          fontSize: 18,
+          paddingBottom: 10,
+          color: '#3A865A'
+        }}
+      >Newly Added</Text>
+      <Text
+        style={{
+          fontSize: 18,
+          paddingBottom: 10,
+          color: '#3A865A'
+        }}
+      >Explore by Cuisine</Text>
+    </SafeAreaView>
   )
 }
 

@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 // enable focus and submit on enter
-const Login = () => {
+function Login() {
   const [login, setLogin] = useState({
     username: '',
     password: ''

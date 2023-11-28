@@ -4,7 +4,9 @@ import { styles } from './UserProfile.styles';
 
 const UserProfile = () => {
   return (
-    <View>
+    <View
+      style={styles.container}
+    >
       <Text>UserProfile</Text>
     </View>
   )
