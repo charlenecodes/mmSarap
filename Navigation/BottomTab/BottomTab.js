@@ -1,12 +1,9 @@
-
-import { View, Text } from 'react-native';
 import React from 'react';
-import { styles } from './BottomTab.styles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Recipes from '../../screens/Recipes/Recipes';
-import Home from '../../screens/Home/Home';
-import AddRecipe from '../../screens/AddRecipe/AddRecipe';
-import Profile from '../../screens/Profile/Profile';
+import Recipes from '../../screens/BottomTabScreens/Recipes/Recipes';
+import Home from '../../screens/BottomTabScreens/Home/Home';
+import AddRecipe from '../../screens/BottomTabScreens/AddRecipe/AddRecipe';
+import Profile from '../../screens/BottomTabScreens/Profile/Profile';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -19,16 +16,17 @@ export const BottomTab = () => {
   return (
     <Tab.Navigator
         screenOptions={{
-          headerShown: false,
+          gestureEnabled: true,
+          headerShown: true,
           // color of the text under the icon
           tabBarActiveTintColor: '#3A865A',
           tabBarInactiveTintColor: 'gray',
           tabBarStyle: {
-            paddingTop: 10,
+            marginTop: 10,
             height: 65
           },
           tabBarLabelStyle: {
-            paddingBottom: 10,
+            marginBottom: 10,
             fontWeight: 600
           }
       }}

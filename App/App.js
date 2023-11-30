@@ -36,7 +36,6 @@ function App() {
         {isLoggedIn ? <Stacks/> : <Login/>}
           
       </NavigationContainer>
-
     </SafeAreaProvider>
     
   );
