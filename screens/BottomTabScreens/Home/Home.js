@@ -2,7 +2,8 @@ import { Text, View, SafeAreaView, Pressable, useColorScheme } from 'react-nativ
 import React from 'react';
 import { styles } from './Home.styles';
 import PressableHeader from '../../../components/PressableHeader/PressableHeader';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import RecipeCard from '../../../components/RecipeCard/RecipeCard';
+
 
 const Home = ({ navigation }) => {
   const colorScheme = useColorScheme()
@@ -32,6 +33,10 @@ const Home = ({ navigation }) => {
         fontSize={20}
         color={'#3A865A'}
       />
+
+      {/* <RecipeCard
+        header={'dish'}
+      /> */}
 
       <PressableHeader 
         onPress={() => console.log('go to newly added recipe')}

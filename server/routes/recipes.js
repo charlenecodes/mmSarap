@@ -66,7 +66,7 @@ router.get('/:cuisine', async (req, res) => {
 });
 
 // ^ POST user's recipes by username
-// ! ONCE THE LOGIN is fixed how to grab the id of the logged in user?
+// ! ONCE THE LOGIN is fixed how to grab the id of the logged in user? is this going to be more frontend? connected to the token/what is saved in local storage?
 router.post('/:username', async function (req, res) {
     const { username } = req.params;
     const { dishName, cuisine, ingredients, instructions } = req.body;
@@ -74,6 +74,11 @@ router.post('/:username', async function (req, res) {
     try {
         // Mongoose returns the id if it finds a match with .exists() method
         const userId = await User.exists({ username })
+        // finds the document with this _id and only returns the username field
+        const userDetails = await User.find(userId)
+        // only returns the username string
+        const user = userDetails[0].username
+        console.log(user)
 
         if (userId) {
             const newRecipe = await Recipe.create({
@@ -81,7 +86,7 @@ router.post('/:username', async function (req, res) {
                 cuisine,
                 ingredients,
                 instructions,
-                addedBy: userId
+                addedBy: user
             })
 
             // with the .populate() method we can see that addedBy embedded so we can easily see that it matches the username that we have in the params

@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { styles } from './Recipes.styles';
 import axios from 'axios';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import PressableHeader from '../../../components/PressableHeader/PressableHeader';
 import RecipeCard from '../../../components/RecipeCard/RecipeCard';
+import { useNavigation } from '@react-navigation/native';
 
-const Recipes = ({ navigation }) => {
+const Recipes = () => {
   const [recipes, setRecipes] = useState(null)
   const size = 20;
   const color = '#3A865A';
+  const navigation = useNavigation();
 
   let category;
 
@@ -56,22 +57,17 @@ const Recipes = ({ navigation }) => {
                   recipe.dishName === 'frozen lumpia' ? category = drink : category = meal
                 } */}
 
-                {/* <Text>{ recipe.instructions }</Text> */}
-
                 <RecipeCard
-                  dishName={recipe.dishName}
-                  addedBy={recipe.addedBy}
+                  recipe={recipe}
                   // need to add this in Mongoose Schema and MongoDB
                   category={category}
                   // cover photo
                   // category={recipe.category}
-                  onPressRecipe={() => navigation.navigate('Stacks', {
-                    screen: 'Recipe Details'
+                  onPressRecipe={() => navigation.navigate('Recipe Details', {
+                    recipe: recipe
                   })}
-                  onPressUser={() => navigation.navigate('Stacks', {
-                    screen: 'User Profile'
-                  })}
-                  instructions={recipe.instructions}
+                  // refine params
+                  onPressUsername={() => navigation.navigate('User Profile')}
                 />
 
               </View>
