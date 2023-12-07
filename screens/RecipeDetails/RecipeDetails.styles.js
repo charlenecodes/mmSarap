@@ -21,7 +21,11 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignContent: 'flex-end'
     },
-    link: {
-        color: '#3A865A'
+    username: {
+        color: '#3A865A',
+        fontWeight: 'bold'
+    },
+    suggestions: {
+        
     }
 })

@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Recipes from '../../screens/BottomTabScreens/Recipes/Recipes';
 import Home from '../../screens/BottomTabScreens/Home/Home';
 import AddRecipe from '../../screens/BottomTabScreens/AddRecipe/AddRecipe';
-import Profile from '../../screens/BottomTabScreens/Profile/Profile';
+import UserProfile from '../../screens/UserProfile/UserProfile';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -18,17 +18,18 @@ export const BottomTab = () => {
         screenOptions={{
           gestureEnabled: true,
           headerShown: true,
+          headerTitleAlign: 'center',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#3A865A',
+          },
           // color of the text under the icon
           tabBarActiveTintColor: '#3A865A',
           tabBarInactiveTintColor: 'gray',
-          tabBarStyle: {
-            marginTop: 10,
-            height: 65
-          },
           tabBarLabelStyle: {
-            marginBottom: 10,
-            fontWeight: 600
-          }
+            marginBottom: 2,
+            fontWeight: 600,
+          },
       }}
     >
         <Tab.Screen 
@@ -58,14 +59,17 @@ export const BottomTab = () => {
               ),
           }}
         />
+
+        {/* change this later so the header is changing based on the person's username */}
         <Tab.Screen 
             name="Profile" 
-            component={Profile}
-            options={{
+            component={UserProfile}
+            options={({ route }) => ({
+              // title: 'Profile',
               tabBarIcon: ({ focused }) => (
                 <FontAwesome name={focused ? "user-circle" : "user-circle-o"} color={focused ? '#3A865A': 'gray'} size={25} /> 
               ),
-          }}
+            })}
         />
     </Tab.Navigator>
   )

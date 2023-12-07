@@ -63,11 +63,16 @@ const Recipes = () => {
                   category={category}
                   // cover photo
                   // category={recipe.category}
+                  // recipe only shows one recipe, which is the specific recipe
                   onPressRecipe={() => navigation.navigate('Recipe Details', {
-                    recipe: recipe
+                    recipe: recipe,
+                    currentDish: recipe.dishName,
+                    username: recipe.addedBy
                   })}
                   // refine params
-                  onPressUsername={() => navigation.navigate('User Profile')}
+                  onPressUsername={() => navigation.navigate('User Profile', {
+                    username: recipe.addedBy
+                  })}
                 />
 
               </View>

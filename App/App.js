@@ -32,7 +32,9 @@ function App() {
 
   return (
     <SafeAreaProvider>
+      <StatusBar barStyle={'light-content'}/>
       <NavigationContainer>
+        
         {isLoggedIn ? <Stacks/> : <Login/>}
           
       </NavigationContainer>

@@ -4,7 +4,20 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         margin: 20,
-        // justifyContent: 'center',
-        // alignItems: 'center',
+    },
+    label: {
+        color: 'gray',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    input: {
+        margin: 5,
+        height: 20,
+        fontSize: 20,
+        backgroundColor: 'pink'
+    },
+    submit: {
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })
