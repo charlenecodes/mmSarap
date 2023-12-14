@@ -12,8 +12,9 @@ export default function PressableHeader({ category, onPress, header, fontSize, c
                 <View
                     style={styles.headerAlignment}
                 >
+                    {/* capitalize makes the text of the title capitalized when shown anywhere */}
                     <Text
-                        style={[styles.header, { fontSize: fontSize }]}
+                        style={[styles.header, { fontSize: fontSize, textTransform: 'capitalize' }]}
                     >
                         {category} {header}
                     </Text>

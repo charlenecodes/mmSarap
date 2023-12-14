@@ -1,4 +1,4 @@
-import { Pressable } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import React, { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Register from '../../screens/Register/Register';
@@ -9,23 +9,14 @@ import Favorites from '../../screens/Favorites/Favorites';
 import Login from '../../screens/Login/Login';
 import RecipeDetails from '../../screens/RecipeDetails/RecipeDetails';
 import Recents from '../../screens/Recents/Recents';
-import Octicons from 'react-native-vector-icons/Octicons';
 
 // create a forgot password screen and API
 const Stack = createNativeStackNavigator();
 
 const Stacks = () => {
-  const [isFavorite, setIsFavorite] = useState(false)
-
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite)
-    // have extra code that if favorite is true it will be added to an array
-    // right now when the state is true it is true for all the items
-  }
   return (
     <Stack.Navigator
       screenOptions={{
-        // headerShown: false,
         gestureEnabled: true,
         headerBackTitleVisible: false,
         headerTintColor: 'white',
@@ -33,6 +24,9 @@ const Stacks = () => {
         headerStyle: {
           backgroundColor: '#3A865A',
         },
+        headerTitleStyle: {
+          textTransform: 'capitalize'
+        }
 
       }}
     >
@@ -42,6 +36,13 @@ const Stacks = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen 
+        name="User Profile" 
+        component={UserProfile} 
+        options={({route}) => ({
+          headerTitle: '@' + route?.params?.username,
+        })}
+      />
       <Stack.Screen name="Users" component={Users} />
       <Stack.Screen
         name="Favorites"
@@ -57,14 +58,14 @@ const Stacks = () => {
         name="Recipe Details"
         component={RecipeDetails}
         options={({ route }) => ({
-          title: route.params.recipe.dishName,
-          headerRight: () => (
-            <Pressable
-              onPress={toggleFavorite}
-            >
-              <Octicons name={isFavorite ? 'heart-fill' : 'heart'} size={25} color={isFavorite ? 'red' : '#3A865A'} />
-            </Pressable>
-          )
+          // needed to make header title into a function that returns the following so I can capitalize the dish name
+          // I also had to import text and wrap it around it because using the headerTitleStyle was not working in this situation
+          // inspected the other header titles that comes default with React Navigation to match the fontSize and weight
+          headerTitle: () => (
+            <Text style={{ textTransform: 'capitalize', color: 'white', fontSize: 17, fontWeight: 600 }}>
+              {route.params.recipe.dishName}
+            </Text>
+          ),
         })}
       />
       <Stack.Screen name="Recents" component={Recents} />

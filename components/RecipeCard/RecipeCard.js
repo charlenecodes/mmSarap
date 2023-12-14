@@ -13,6 +13,7 @@ export default function RecipeCard({ onPressRecipe, onPressUsername, recipe, cat
         setIsFavorite(!isFavorite)
         // have extra code that if favorite is true it will be added to an array
     }
+    
     return (
         <View
             style={styles.container}

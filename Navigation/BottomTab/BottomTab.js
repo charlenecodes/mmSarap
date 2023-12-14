@@ -3,11 +3,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Recipes from '../../screens/BottomTabScreens/Recipes/Recipes';
 import Home from '../../screens/BottomTabScreens/Home/Home';
 import AddRecipe from '../../screens/BottomTabScreens/AddRecipe/AddRecipe';
-import UserProfile from '../../screens/UserProfile/UserProfile';
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-
+import Profile from '../../screens/BottomTabScreens/Profile/Profile';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
 
@@ -63,9 +62,9 @@ export const BottomTab = () => {
         {/* change this later so the header is changing based on the person's username */}
         <Tab.Screen 
             name="Profile" 
-            component={UserProfile}
+            component={Profile}
             options={({ route }) => ({
-              // title: 'Profile',
+              title: 'My Profile',
               tabBarIcon: ({ focused }) => (
                 <FontAwesome name={focused ? "user-circle" : "user-circle-o"} color={focused ? '#3A865A': 'gray'} size={25} /> 
               ),

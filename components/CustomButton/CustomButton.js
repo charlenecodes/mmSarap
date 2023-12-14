@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, Pressable } from 'react-native';
 import React from 'react';
 
-export default function Button({ text, onPress }) {
+export default function CustomButton({ text, onPress }) {
     return (
         <Pressable
             onPress={onPress}

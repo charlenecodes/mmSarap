@@ -1,8 +1,9 @@
 import { Text, View, SafeAreaView, Pressable, useColorScheme } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { styles } from './Home.styles';
 import PressableHeader from '../../../components/PressableHeader/PressableHeader';
 import RecipeCard from '../../../components/RecipeCard/RecipeCard';
+import axios from 'axios';
 
 
 const Home = ({ navigation }) => {
@@ -11,6 +12,22 @@ const Home = ({ navigation }) => {
   // if (colorScheme === 'dark') console.log('dark mode')
 
   const isDark = colorScheme === 'dark'
+
+  const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost'
+
+  // useEffect(() => {
+  //   async function getRecipes() {
+  //     try {
+  //       // it wasn't working because it was https and I had a typo before 3000
+  //       await axios.get(`http://${localhost}:3000/recipes/`)
+  //       // await axios.get(`http://172.20.10.12:3000/recipes/`)
+  //         .then((res) => setRecipes(res.data))
+  //     } catch (err) {
+  //       console.error({ error: err.message })
+  //     }
+  //   }
+  //   getRecipes()
+  // }, [])
 
   return (
     <SafeAreaView

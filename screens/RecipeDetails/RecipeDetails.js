@@ -2,19 +2,51 @@ import { View, ScrollView, Text, Image, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { styles } from './RecipeDetails.styles';
 import H2 from '../../components/Headers/H2';
-import Link from '../../components/Link/Link';
 import H1 from '../../components/Headers/H1';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import axios from 'axios';
+import Octicons from 'react-native-vector-icons/Octicons';
 
 export default function RecipeDetails({ route, navigation }) {
   // recipe contains the whole object, which cannot be displayed
   // this is the specific recipe that the user clicked on from the Recipes page
   const recipe = route.params.recipe;
-  const username = route.params.username;
-  const currentDish =route.params.currentDish;
+  const username = route.params.recipe.addedBy;
+  const currentDish = route.params.recipe.dishName;
   const [recipes, setRecipes] = useState(null);
 
+  const [isFavorite, setIsFavorite] = useState(false)
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite)
+    // have extra code that if favorite is true it will be added to an array
+    // right now when the state is true it is true for all the items
+    // need to identify it by the id so it will only be one item that will be set to favorite
+    // would need to post to the backend so it updates everywhere - need to create isFavorite in the Schema and document
+  }
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable
+          onPress={toggleFavorite}
+        >
+          <Octicons name={isFavorite ? 'heart-fill' : 'heart'} size={25} color={isFavorite ? 'red' : 'white'} />
+        </Pressable>
+      )
+    })
+  })
+
+  // what can be possible to get the text casing that I want is to use React Navigation navigation.setOptions inside useEffect or useLayoutEffect
+  // const HeaderTitle = () => {
+  //   currentDish.toUppercase()
+  // }
+
+  // useEffect(() => {
+  //   navigation.setOptions({
+  //     headerTitle: () => <HeaderTitle/>
+  //   })
+  // }, [])
   const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost'
 
   useEffect(() => {
@@ -42,8 +74,8 @@ export default function RecipeDetails({ route, navigation }) {
       <H1 text={recipe.dishName} />
 
       <Pressable
-        onPress={() => navigation.navigate('User Profile', {
-          username: recipe.username
+        onPress={() => navigation.navigate('Profile', {
+          username: recipe.addedBy,
         })}
       >
         <Text>by <Text style={styles.username}>{recipe.addedBy}</Text></Text>

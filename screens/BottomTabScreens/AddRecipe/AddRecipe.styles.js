@@ -6,15 +6,21 @@ export const styles = StyleSheet.create({
         margin: 20,
     },
     label: {
-        color: 'gray',
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignSelf: 'center',
+        color: '#3A865A',
+        fontWeight: 'bold',
+        marginVertical: 3,
     },
     input: {
-        margin: 5,
-        height: 20,
-        fontSize: 20,
-        backgroundColor: 'pink'
+        color: 'black',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: 'gray',
+        width: '100%',
+        height: 40,
+        padding: 5,
+        marginBottom: 15,
+        fontSize: 20
     },
     submit: {
         justifyContent: 'center',
