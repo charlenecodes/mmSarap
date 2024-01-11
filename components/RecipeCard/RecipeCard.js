@@ -5,7 +5,7 @@ import { styles } from './RecipeCard.styles';
 import Octicons from 'react-native-vector-icons/Octicons';
 
 // This is what we 
-export default function RecipeCard({ onPressRecipe, onPressUsername, recipe, category }) {
+export default function RecipeCard({ onPressRecipe, onPressUsername, recipe, category, addedBy }) {
     // how to use this so all the favorite recipes can be shown in one place?
     const [isFavorite, setIsFavorite] = useState(false)
 
@@ -40,7 +40,7 @@ export default function RecipeCard({ onPressRecipe, onPressUsername, recipe, cat
                     header={recipe.dishName}
                     fontSize={20}
                     color={'#3A865A'}
-                    addedBy={recipe.addedBy}
+                    addedBy={recipe.addedBy || addedBy}
                     category={category}
                     onPress={onPressRecipe}
                     instructions={recipe.instructions}

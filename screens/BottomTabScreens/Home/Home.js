@@ -1,4 +1,4 @@
-import { Text, View, SafeAreaView, Pressable, useColorScheme } from 'react-native';
+import { Text, View, SafeAreaView, Pressable, useColorScheme, ScrollView, Image } from 'react-native';
 import React, { useEffect } from 'react';
 import { styles } from './Home.styles';
 import PressableHeader from '../../../components/PressableHeader/PressableHeader';
@@ -44,32 +44,124 @@ const Home = ({ navigation }) => {
 
       {/* <Text>useColorScheme(): {colorScheme}</Text> */}
 
-      <PressableHeader 
-        onPress={() => navigation.navigate('Favorites')}
-        header={'Favorites'}
-        fontSize={20}
-        color={'#3A865A'}
-      />
+      <View>
+
+        <PressableHeader 
+          onPress={() => navigation.navigate('Favorites')}
+          header={'Favorites'}
+          fontSize={20}
+          color={'#3A865A'}
+        />
+        <ScrollView
+          horizontal={true}
+        >
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+
+        </ScrollView>
+      </View>
 
       {/* <RecipeCard
         header={'dish'}
       /> */}
 
-      <PressableHeader 
-        onPress={() => console.log('go to newly added recipe')}
-        header={'Recents'}
-        fontSize={20}
-        color={'#3A865A'}
-      />
+      <View>
 
-      <PressableHeader 
-        onPress={() => navigation.navigate('BottomTab', {
-          screen: 'Recipes'
-        })}
-        header={'Explore by Cuisine'}
-        fontSize={20}
-        color={'#3A865A'}
-      />
+        <PressableHeader 
+          onPress={() => console.log('go to newly added recipe')}
+          header={'Recents'}
+          fontSize={20}
+          color={'#3A865A'}
+        />
+        <ScrollView
+          horizontal={true}
+        >
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+
+        </ScrollView>
+
+      </View>
+
+      <View
+        style={{ marginBottom: 20 }}
+      >
+        <PressableHeader 
+          onPress={() => navigation.navigate('BottomTab', {
+            screen: 'Recipes'
+          })}
+          header={'Explore by Cuisine'}
+          fontSize={20}
+          color={'#3A865A'}
+        />
+        <ScrollView
+          horizontal={true}
+        >
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+
+          <Image 
+            style={{ height: 150, width: 150, margin: 5}}
+            source={require('../../../images/lumpia.jpg')}
+          />
+
+        </ScrollView>
+      </View>
 
 </SafeAreaView>
   )

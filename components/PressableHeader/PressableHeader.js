@@ -14,6 +14,8 @@ export default function PressableHeader({ category, onPress, header, fontSize, c
                 >
                     {/* capitalize makes the text of the title capitalized when shown anywhere */}
                     <Text
+                        numberOfLines={1}
+                        ellipsizeMode='tail'
                         style={[styles.header, { fontSize: fontSize, textTransform: 'capitalize' }]}
                     >
                         {category} {header}
