@@ -3,7 +3,12 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        margin: 20,
+        marginTop: 10,
+        justifyContent: 'flex-start',
         alignItems: 'center',
+    },
+    username: {
+        color: '#3A865A'
     }
 })

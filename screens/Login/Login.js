@@ -2,6 +2,7 @@ import { Text, View, TextInput, Pressable, SafeAreaView, Image, ScrollView, Keyb
 import React, { useState } from 'react';
 import { styles } from './Login.styles';
 import { useNavigation } from '@react-navigation/native';
+import CustomButton from '../../components/CustomButton/CustomButton';
 
 
 // enable focus and submit on enter
@@ -10,6 +11,18 @@ function Login() {
     username: '',
     password: ''
   })
+
+  const handleChange = (e) => {
+    setLogin({
+      ...login,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = () => {
+    console.log(login)
+  }
+
   const navigation = useNavigation()
 
 
@@ -32,20 +45,28 @@ function Login() {
           <View 
             style={styles.inputContainer}
           >
-          <Text
+          {/* <Text
             style={styles.title}
-          >Login</Text>
+          >Login</Text> */}
+
+          <Text
+            style={styles.label}
+          >Username</Text>
           <TextInput
             name='email'
-            // value={login.username}
-            // onChangeText={setLogin(login.username)}
+            value={login.username}
+            onChange={handleChange}
             style={styles.input}
             placeholder='username'
           />
+
+          <Text
+            style={styles.label}
+          >Password</Text>
           <TextInput
             name='email'
-            // value={login.password}
-            // onChangeText={setLogin(login.password)}
+            value={login.password}
+            onChange={handleChange}
             style={styles.input}
             secureTextEntry={true}
             textContentType='password'
@@ -74,18 +95,10 @@ function Login() {
 
           </View>
 
-          <Pressable
-            onPress={() => navigation.navigate("Home")}
-          >
-            {/* the View is needed to style the area around the text and Pressable only handles onPress */}
-            <View
-              style={styles.button}
-            >
-              <Text
-                style={styles.buttonText}
-              >Log in</Text>
-            </View>
-          </Pressable>
+          <CustomButton 
+            text={'Log in'}
+            onPress={(e) => handleSubmit}
+          />
         </View>
         </KeyboardAvoidingView>
       </ScrollView>

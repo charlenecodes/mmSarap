@@ -15,10 +15,13 @@ export const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
         marginTop: '50%'
-        // backgroundColor: '#EDF0E5'
+    },
+    label: {
+        alignSelf: 'center',
+        color: '#3A865A',
+        fontWeight: 'bold',
+        marginVertical: 3,
     },
     input: {
         borderColor: 'gray',
@@ -26,32 +29,24 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 15,
         width: '80%',
+        height: 40,
         fontSize: 16,
         margin: 5,
     },
     inputContainer: {
-        flex: 1,
-        justifyContent: 'center',
         alignItems: 'center'
     },
     appName: {
-        // flex: 1,
         resizeMode: 'contain',
         height: 100,
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignSelf: 'center',
+        marginBottom: 20
     },
-    // logo: {
-    //     width: 50,
-    //     height: 50,
-    //     flex: 1,
-    //     justifyContent: 'center',
-    //     alignContent: 'center'
-    // },
     options: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '80%',
+        marginBottom: 15
     },
     register: {
         color: '#3A865A'

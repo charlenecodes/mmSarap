@@ -5,7 +5,7 @@ import { styles } from './Users.styles';
 const Users = () => {
   return (
     <View>
-      <Text>Users</Text>
+      <Text>Return all of the Users and maybe their last 3 recipes</Text>
     </View>
   )
 }
