@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 // * IMPORTANT to be able to use mongoose queries
 const User = require('../models/User');
 
-
 // ^ MIDDLEWARE
 // need to be with the function keyword, otherwise it doesn't work
 
@@ -15,55 +14,63 @@ const User = require('../models/User');
 // if you want it to move on to the next middleware, you can't do another res.send since these can only be sent once like return - that's why only one of the errors is being shown even if it is not the right one
 // now this logic makes more sense
 async function checkIfEmailExists(req, res, next) {
-  let { email } = req.body;
-  const emailExists = await User.exists({ email });
+  let {email} = req.body;
+  const emailExists = await User.exists({email});
   if (emailExists === null) {
-    next()
+    next();
   } else {
-    console.log('Email exists')
-    res.status(404).send({ error: 'Email already registered!' })
+    console.log('Email exists');
+    res.status(404).send({error: 'Email already registered!'});
   }
 }
 
 async function checkIfUsernameExists(req, res, next) {
-  let { username } = req.body;
-  const usernameExists = await User.exists({ username });
+  let {username} = req.body;
+  const usernameExists = await User.exists({username});
 
   if (usernameExists === null) {
-    next()
+    next();
   } else {
-    console.log('Username exists')
-    res.status(404).send({ error: 'Invalid username!' })
+    console.log('Username exists');
+    res.status(404).send({error: 'Invalid username!'});
   }
 }
 
-//^ GET home page - show recently added 
+//^ GET home page - show recently added
 router.get('/', function (req, res) {
-  res.send({ greeting: 'Home page' });
+  res.send({greeting: 'Home page'});
 });
 
 // ^ POST register a user
-router.post("/register", checkIfEmailExists, checkIfUsernameExists, async (req, res) => {
-  const { username, name, email, password } = req.body;
-  const hashedPW = await bcrypt.hash(password, Number(process.env.SALT_ROUNDS));
+router.post(
+  '/register',
+  checkIfEmailExists,
+  checkIfUsernameExists,
+  async (req, res) => {
+    const {username, name, email, password} = req.body;
+    const hashedPW = await bcrypt.hash(
+      password,
+      Number(process.env.SALT_ROUNDS),
+    );
 
-  try {
-    const newUser = await User.create({
-      username,
-      name,
-      email,
-      password: hashedPW
-    });
+    try {
+      const newUser = await User.create({
+        username,
+        name,
+        email,
+        password: hashedPW,
+      });
 
-    res.send(newUser);
-  } catch (err) {
-    res.status(404).send({ error: err.message });
-  }
-})
+      res.send(newUser);
+    } catch (err) {
+      res.status(404).send({error: err.message});
+    }
+  },
+);
 
 // ^ POST login
-router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+router.post('/login', async (req, res) => {
+  const {username, password} = req.body;
 
   //? not sure why a plain find was not working here, but findOne does
   //^ SOLUTION: find() never returns null so it always executes the catch block
@@ -72,16 +79,25 @@ router.post("/login", async (req, res) => {
 
   try {
     if (user !== null) {
-      const passwordMatches = await bcrypt.compare(password, user.password)
+      const passwordMatches = await bcrypt.compare(password, user.password);
 
-      if (passwordMatches) res.status(200).send({ message: `Password matches. Welcome, ${user.name}!` });
-      else res.status(404).send({ error: 'Invalid password!' });
+      if (passwordMatches)
+        res.status(200).send({
+          message: `Welcome, ${user.name}!`,
+          currentUser: {
+            id: user.id,
+            name: user.name,
+            username: user.username,
+            email: user.email,
+          },
+        });
+      else res.status(404).send({error: 'Invalid password!'});
     } else {
-      res.status(404).send({ error: 'Invalid username!' });
+      res.status(404).send({error: 'Invalid username!'});
     }
   } catch (err) {
-    res.status(404).send({ error: err.message });
+    res.status(404).send({error: err.message});
   }
-})
+});
 
 module.exports = router;

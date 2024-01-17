@@ -1,103 +1,117 @@
-import { Text, View } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { styles } from './UserProfile.styles';
+import {Text, View, ScrollView, Pressable, Dimensions} from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import {styles} from './UserProfile.styles';
 import axios from 'axios';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {AuthContext} from '../../Context/authContext';
 
 // This should display all the recipes similar to profile, but this will be when the logged in user clicks on the username from the Recipes tab
-const UserProfile = ({ route }) => {
+const UserProfile = ({route}) => {
   const username = route?.params?.username;
-  const [recipes, setRecipes] = useState(null)
+  const [recipes, setRecipes] = useState(null);
+
+  const {allRecipes} = useContext(AuthContext);
+  const windowWidth = Dimensions.get('window').width;
 
   // this returns the amount of recipes this specific user has posted
-  const numberOfRecipes =  recipes?.filter((recipe) => recipe.addedBy === username).length
-  const numberOfFavorites = 3;
+  const numberOfRecipes = recipes?.filter(
+    recipe => recipe.addedBy === username,
+  ).length;
+  const numberOfFavorites = 0;
 
-  const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost'
+  const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+
+  // this returns the recipes this specific user has posted
+  const userRecipes = allRecipes?.filter(recipe => recipe.addedBy === username);
 
   useEffect(() => {
     async function getRecipes() {
       try {
-        await axios.get(`http://${localhost}:3000/recipes/`)
-          .then((res) => setRecipes(res.data))
+        await axios
+          .get(`http://${localhost}:3000/recipes/`)
+          .then(res => setRecipes(res.data));
       } catch (err) {
-        console.error({ error: err.message })
+        console.error({error: err.message});
       }
     }
-    getRecipes()
-  }, [])
+    getRecipes();
+  }, []);
 
   return (
-    <View
-      style={styles.container}
-    >
-      <View
-        style={{ flexDirection: 'row', gap: 15, justifyContent: 'flex-start' }}
-      >
-        <FontAwesome
-            name={"user-circle"}
-            color={'gray'}
-            size={80}
-          />
-        
-    
-        <View
-          style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Text 
-            style={{fontSize: 20, fontWeight: 'bold', alignItems: 'center'}}
-          >
-            {/* needed to put the condition inside parentheses so the condition will work */}
-            {numberOfRecipes}
-          </Text>
-          <Text>{ (numberOfRecipes > 1) ? 'recipes' : 'recipe' }</Text> 
-        </View>
-        <View
-          style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
-        >
-          <Text 
-            style={{fontSize: 20, fontWeight: 'bold'}}
-          >
-            {/* change this so that we will get the number of recipes here */}
-            {numberOfFavorites}
-          </Text>
-          <Text>{ (numberOfFavorites > 1) ? 'favorites' : 'favorite' }</Text> 
-        </View>
+    <ScrollView style={styles.container}>
+      <View>
+        <View style={styles.header}>
+          <FontAwesome name={'user-circle'} color={'gray'} size={80} />
 
-        {/* 
-        Would be a good addition later
-        
-        <View
-          style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
-        >
-          <Text 
-            style={{fontSize: 20, fontWeight: 'bold'}}
-          >
-            {numberOfFavorites}
-          </Text>
-          <Text>following</Text> 
+          <View style={styles.detailPosition}>
+            <Text style={styles.count}>
+              {/* change this so that we will get the number of recipes here */}
+              {numberOfRecipes}
+            </Text>
+            <Text>{numberOfRecipes > 1 ? 'recipes' : 'recipe'}</Text>
+          </View>
+          <View style={styles.detailPosition}>
+            <Text style={styles.count}>
+              {/* change this so that we will get the number of recipes here */}
+              {numberOfFavorites}
+            </Text>
+            {numberOfFavorites > 1 ? (
+              <Text>favorites</Text>
+            ) : (
+              <Text>favorite</Text>
+            )}
+          </View>
         </View>
-
-        <View
-          style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
-        >
-          <Text 
-            style={{fontSize: 20, fontWeight: 'bold'}}
-          >
-            {numberOfFavorites}
-          </Text>
-          <Text>{ (numberOfFavorites > 1) ? 'followers' : 'follower' }</Text> 
-        </View> */}
-
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'flex-start',
+              marginTop: 20,
+              flex: 1,
+            }}>
+            {/* DISPLAY THE LOGGED IN USERS RECIPES HERE */}
+            {userRecipes.map((recipe, index) => {
+              recipe.createdBy === username;
+              return (
+                <Pressable
+                  key={index}
+                  onPress={() => {
+                    navigation.navigate('Recipe Details', {
+                      recipe: recipe,
+                    });
+                  }}>
+                  <View
+                    style={{
+                      width: windowWidth * 0.32,
+                      height: windowWidth * 0.32,
+                      backgroundColor: '#3A865A',
+                      alignContent: 'space-between',
+                      margin: 0.3,
+                      flex: 1,
+                      flexGrow: 1,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: 'white',
+                        flex: 1,
+                        textAlign: 'center',
+                        margin: 5,
+                      }}>
+                      {recipe.dishName[0].toUpperCase() +
+                        recipe.dishName.substring(1)}
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
+        </ScrollView>
       </View>
-      {/* Maybe not even necessary
-      
-      <Text
-        style={{ fontSize: 14, marginTop: 5, justifyContent: 'flex-start'}}
-      >@{username}</Text> */}
-    </View>
+    </ScrollView>
+  );
+};
 
-  )
-}
-
-export default UserProfile
+export default UserProfile;

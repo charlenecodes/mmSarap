@@ -1,14 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
 export default function H1({text}) {
   return (
     <View>
-      <Text
-        style={styles.h1}
-      >{text}</Text>
+      <Text style={styles.h1}>{text[0].toUpperCase() + text.substring(1)}</Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -17,6 +15,5 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     color: '#3A865A',
-    textTransform: 'capitalize'
-}
-})
+  },
+});

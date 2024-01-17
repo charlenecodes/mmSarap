@@ -32,15 +32,27 @@ router.get('/:cuisine', async (req, res) => {
 // ^ GET user's recipes by username
 router.get('/:username', async function (req, res) {
   const {username} = req.params;
-  // const usernameExists = User.exists(username);
-  // console.log(usernameExists)
 
   try {
-    // does this need the curly brackets? - no
-    let query = await User.where('username')
-      .equals(username)
-      .select('recipes')
-      .populate('recipes');
+    let query = await Recipe.find().where('addedBy').equals(username);
+    // .select('recipes')
+    // .populate('recipes');
+    console.log(query, 'from API call');
+    res.send(query);
+  } catch (err) {
+    res.status(404).send({message: err.message});
+  }
+});
+
+// ^ GET favorites by username
+router.get('/:username', async function (req, res) {
+  const {username} = req.params;
+
+  try {
+    let query = await Recipe.find().where('addedBy').equals(username);
+    // .select('recipes')
+    // .populate('recipes');
+    console.log(query, 'from API call');
     res.send(query);
   } catch (err) {
     res.status(404).send({message: err.message});
