@@ -25,30 +25,20 @@ export default function RecipeDetails({route, navigation}) {
     // would need to post to the backend so it updates everywhere - need to create isFavorite in the Schema and document
   };
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Pressable onPress={toggleFavorite}>
-          <Octicons
-            name={isFavorite ? 'heart-fill' : 'heart'}
-            size={25}
-            color={isFavorite ? 'tomato' : 'white'}
-          />
-        </Pressable>
-      ),
-    });
-  });
-
-  // what can be possible to get the text casing that I want is to use React Navigation navigation.setOptions inside useEffect or useLayoutEffect
-  // const HeaderTitle = () => {
-  //   currentDish.toUppercase()
-  // }
-
   // useEffect(() => {
   //   navigation.setOptions({
-  //     headerTitle: () => <HeaderTitle/>
-  //   })
-  // }, [])
+  //     headerLeft: () => (
+  //       <Pressable onPress={toggleFavorite}>
+  //         <Octicons
+  //           name={isFavorite ? 'heart-fill' : 'heart'}
+  //           size={25}
+  //           color={isFavorite ? 'tomato' : 'white'}
+  //         />
+  //       </Pressable>
+  //     ),
+  //   });
+  // });
+
   const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 
   useEffect(() => {
@@ -91,8 +81,7 @@ export default function RecipeDetails({route, navigation}) {
       </Text>
 
       <View style={styles.suggestions}>
-        {/* Make this so it is only displayed when a person has favorites and it will only display the recipes of the users the person has favorited */}
-        {/* <H2 text={'Recommended Recipes'}/> */}
+        {/* <H2 text={`More Recipes from @${recipe.addedBy}`} /> */}
 
         {/* BEST ANSWER: 
         https://stackoverflow.com/questions/46862976/how-to-filter-array-of-objects-in-react-native 
@@ -112,16 +101,20 @@ export default function RecipeDetails({route, navigation}) {
           .map(recipe => {
             return (
               <View key={recipe._id}>
-                <H2 text={`More Recipes from @${recipe.addedBy}`} />
-
                 <RecipeCard
                   recipe={recipe}
-                  // need to send an onPress so that the person can continue clicking to the next page, but not sure how this will work
-                  // onPressRecipe={navigation.navigate("Recipe Details", {
+                  // need to send an onPress so that the person can continue clicking to the next page, but not sure how this works
+                  // onPressRecipe={navigation.push('Recipe Details', {
                   //   params: {
-                  //     recipe: recipe._id
-                  //   }
+                  //     recipe: recipe,
+                  //   },
                   // })}
+                  // onPressUsername={() =>
+                  //   navigation.navigate('User Profile', {
+                  //     username: recipe.addedBy,
+                  //   })
+                  // }
+                  // addedBy={recipe.addedBy}
                 />
               </View>
             );

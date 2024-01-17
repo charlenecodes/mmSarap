@@ -1,5 +1,5 @@
 import {Pressable, Text} from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Register from '../../screens/Register/Register';
 import Users from '../../screens/Users/Users';
@@ -11,12 +11,15 @@ import RecipeDetails from '../../screens/RecipeDetails/RecipeDetails';
 import Recents from '../../screens/Recents/Recents';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from '../../Context/authContext';
+import Octicons from 'react-native-vector-icons/Octicons';
 
 const Stacks = () => {
   // create a forgot password screen and API
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
 
+  const {toggleFavorite, isFavorite} = useContext(AuthContext);
   return (
     <Stack.Navigator
       screenOptions={{
@@ -63,15 +66,24 @@ const Stacks = () => {
           headerTitle: () => (
             <Text
               style={{
-                textTransform: 'capitalize',
                 color: 'white',
                 fontSize: 17,
                 fontWeight: 600,
               }}>
-              {route.params.recipe.dishName}
+              {route.params.recipe.dishName[0].toUpperCase() +
+                route.params.recipe.dishName.substring(1)}
             </Text>
           ),
           presentation: 'modal',
+          headerLeft: () => (
+            <Pressable onPress={toggleFavorite}>
+              <Octicons
+                name={isFavorite ? 'heart-fill' : 'heart'}
+                size={25}
+                color={isFavorite ? 'tomato' : 'white'}
+              />
+            </Pressable>
+          ),
           headerRight: () => (
             <Pressable onPress={() => navigation.goBack()}>
               <AntDesign name={'close'} color={'white'} size={30} />
@@ -80,9 +92,38 @@ const Stacks = () => {
         })}
       />
       <Stack.Screen name="Recents" component={Recents} />
-
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} />
+      {/* <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          presentation: 'modal',
+          headerRight: () => (
+            <Pressable onPress={() => navigation.goBack()}>
+              <AntDesign name={'close'} color={'white'} size={30} />
+            </Pressable>
+          ),
+          title: 'Login',
+          tabBarIcon: ({focused}) => (
+            <FontAwesome
+              name={focused ? 'user-circle' : 'user-circle-o'}
+              color={focused ? '#3A865A' : 'gray'}
+              size={25}
+            />
+          ),
+        }}
+      /> */}
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{
+          presentation: 'modal',
+          headerRight: () => (
+            <Pressable onPress={() => navigation.goBack()}>
+              <AntDesign name={'close'} color={'white'} size={30} />
+            </Pressable>
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 };

@@ -1,15 +1,15 @@
-import {Text, View, SafeAreaView, Platform, ScrollView} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {View, Text, Platform, ScrollView} from 'react-native';
+import React, {useEffect, useState, useContext} from 'react';
 import {styles} from './Recipes.styles';
 import axios from 'axios';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import RecipeCard from '../../../components/RecipeCard/RecipeCard';
 import {useNavigation} from '@react-navigation/native';
 import FilterButton from '../../../components/FilterButton/FilterButton';
 import {useNetInfo} from '@react-native-community/netinfo';
+import {AuthContext} from '../../../Context/authContext';
 
 const Recipes = () => {
-  const [recipes, setRecipes] = useState(null);
+  const {recipes, cuisine, allRecipes, setRecipes} = useContext(AuthContext);
 
   const size = 20;
   const color = '#3A865A';
@@ -54,22 +54,20 @@ const Recipes = () => {
   // } else {
   //   console.log('ip', ip);
   // }
-
-  // lifted state up
-  const [cuisine, setCuisine] = useState(null);
-
+  // console.log(allRecipes, 'all Recipes');
   useEffect(() => {
     async function getRecipes() {
-      if (recipes && !cuisine) {
-        try {
-          // it wasn't working because it was https and I had a typo before 3000
-          await axios
-            .get(`http://${localhost}:3000/recipes/`)
-            .then(res => setRecipes(res.data));
-        } catch (err) {
-          console.error({error: err.message});
-        }
-      } else {
+      // get all the Recipes
+      if (allRecipes && cuisine === null) {
+        // try {
+        //   await axios
+        //     .get(`http://${localhost}:3000/recipes/`)
+        //     .then(res => setAllRecipes(res.data));
+        // } catch (err) {
+        //   console.error({error: err.message});
+        // }
+        // console.log(allRecipes);
+      } else if (cuisine !== null) {
         try {
           await axios
             // I had the colons so it wasn't working
@@ -85,10 +83,6 @@ const Recipes = () => {
     getRecipes();
   }, [cuisine]);
 
-  console.log(recipes, 'recipes');
-
-  // ^ AT THE TOP OF THE CARDS, CREATE A FILTER FOR ALL THE DIFFERENT CUISINES AND THEN WHEN THEY ARE CLICKED ONLY SHOW THE RECIPES THAT MATCH THE CUISINES - same with the home page show the different cuisines
-
   return (
     <ScrollView
       style={{
@@ -99,42 +93,64 @@ const Recipes = () => {
       {/* This is where the information will be shown for the Recipes - have a filter to sort them from A-Z and reverse */}
 
       <ScrollView horizontal={true}>
-        <FilterButton cuisine={cuisine} setCuisine={setCuisine} />
+        <FilterButton />
       </ScrollView>
-      {recipes?.map(recipe => {
-        // was not showing on the screen because I didn't have the return keyword
-        return (
-          // the first element needs to receive the unique id
-          <View key={recipe._id}>
-            <View style={styles.list}>
-              {/* This wouldn't appear later because if it is already in the database then we will have the category just passed as recipe.category */}
-              {/* {
+      {!cuisine
+        ? allRecipes.map(recipe => {
+            // was not showing on the screen because I didn't have the return keyword
+            return (
+              // the first element needs to receive the unique id
+              <View key={recipe._id}>
+                <View style={styles.list}>
+                  {/* This wouldn't appear later because if it is already in the database then we will have the category just passed as recipe.category */}
+                  {/* {
                     recipe.dishName === 'frozen lumpia' ? category = drink : category = meal
                   } */}
 
-              <RecipeCard
-                recipe={recipe}
-                // need to add this in Mongoose Schema and MongoDB
-                // category={category}
-                // cover photo
-                // category={recipe.category}
-                // recipe only shows one recipe, which is the specific recipe
-                onPressRecipe={() =>
-                  navigation.navigate('Recipe Details', {
-                    recipe: recipe,
-                  })
-                }
-                // refine params
-                onPressUsername={() =>
-                  navigation.navigate('User Profile', {
-                    username: recipe.addedBy,
-                  })
-                }
-              />
-            </View>
-          </View>
-        );
-      })}
+                  <RecipeCard
+                    recipe={recipe}
+                    // need to add this in Mongoose Schema and MongoDB
+                    // category={category}
+                    // cover photo
+                    // category={recipe.category}
+                    // recipe only shows one recipe, which is the specific recipe
+                    onPressRecipe={() =>
+                      navigation.navigate('Recipe Details', {
+                        recipe: recipe,
+                      })
+                    }
+                    // refine params
+                    onPressUsername={() =>
+                      navigation.navigate('User Profile', {
+                        username: recipe.addedBy,
+                      })
+                    }
+                  />
+                </View>
+              </View>
+            );
+          })
+        : recipes?.map(recipe => {
+            return (
+              <View key={recipe._id}>
+                <View style={styles.list}>
+                  <RecipeCard
+                    recipe={recipe}
+                    onPressRecipe={() =>
+                      navigation.navigate('Recipe Details', {
+                        recipe: recipe,
+                      })
+                    }
+                    onPressUsername={() =>
+                      navigation.navigate('User Profile', {
+                        username: recipe.addedBy,
+                      })
+                    }
+                  />
+                </View>
+              </View>
+            );
+          })}
     </ScrollView>
   );
 };

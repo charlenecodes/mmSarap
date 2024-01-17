@@ -1,11 +1,13 @@
 import {StyleSheet, Text, Pressable, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import axios from 'axios';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {AuthContext} from '../../Context/authContext';
 
-export default function FilterButton({cuisine, setCuisine}) {
+export default function FilterButton() {
   // returns the different cuisines
-  const [cuisines, setCuisines] = useState([]);
+  const {cuisine, setCuisine, cuisines, setCuisines, allRecipes, setRecipes} =
+    useContext(AuthContext);
 
   //^ SEND CUISINE to Recipes.js so that can be used to get the recipes only from the selected cuisine
   // ^ make it so that when reset filter is clicked then it will just default to showing all recipes
@@ -32,6 +34,7 @@ export default function FilterButton({cuisine, setCuisine}) {
           style={styles.buttonSelected}
           onPress={() => {
             setCuisine(null);
+            setRecipes(allRecipes);
           }}>
           <View
             style={{
@@ -54,12 +57,9 @@ export default function FilterButton({cuisine, setCuisine}) {
           return (
             <Pressable
               key={index}
-              //^ how to only trigger one
               onPress={() => {
-                // ^ what is the best way to print?
-                if (index <= cuisines.length) setCuisine(cuisine);
+                setCuisine(cuisine);
               }}
-              // ^ HOW TO MAKE THE STYLING ADAPT TO WHETHER IT WAS CLICKED OR NOT
               style={styles.button}>
               <Text style={styles.text}>{cuisine}</Text>
             </Pressable>
