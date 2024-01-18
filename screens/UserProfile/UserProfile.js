@@ -6,7 +6,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {AuthContext} from '../../Context/authContext';
 
 // This should display all the recipes similar to profile, but this will be when the logged in user clicks on the username from the Recipes tab
-const UserProfile = ({route}) => {
+const UserProfile = ({route, navigation}) => {
   const username = route?.params?.username;
   const [recipes, setRecipes] = useState(null);
 

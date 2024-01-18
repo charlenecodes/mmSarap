@@ -60,7 +60,6 @@ router.get('/:username', async function (req, res) {
 });
 
 // ^ POST user's recipes by username
-// ! ONCE THE LOGIN is fixed how to grab the id of the logged in user? is this going to be more frontend? connected to the token/what is saved in local storage?
 router.post('/:username', async function (req, res) {
   const {username} = req.params;
   const {dishName, cuisine, ingredients, instructions} = req.body;
@@ -72,7 +71,6 @@ router.post('/:username', async function (req, res) {
     const userDetails = await User.find(userId);
     // only returns the username string
     const user = userDetails[0].username;
-    console.log(user);
 
     if (userId) {
       const newRecipe = await Recipe.create({
@@ -84,13 +82,44 @@ router.post('/:username', async function (req, res) {
       });
 
       // with the .populate() method we can see that addedBy embedded so we can easily see that it matches the username that we have in the params
-      let query = await newRecipe.populate('addedBy');
-      res.send(query);
+      const addedRecipe = await newRecipe.populate('addedBy');
+      const updatedRecipes = await Recipe.find();
+      const updatedCuisines = await Recipe.find().distinct('cuisine');
+      res.send({
+        newRecipe: addedRecipe,
+        allRecipes: updatedRecipes,
+        allCuisines: updatedCuisines,
+      });
     } else {
       res.status(404).send({error: 'This user does not exist!'});
     }
   } catch (err) {
     res.status(404).send({message: err.message});
+  }
+});
+
+// ^ DELETE a recipe with the id and the logged in user's username
+router.delete('/:recipeId/:username', async function (req, res) {
+  const {recipeId, username} = req.params;
+  try {
+    const deletedRecipe = await Recipe.find({_id: recipeId});
+    console.log(deletedRecipe[0]);
+    // person has to be logged in to delete a recipe
+    if (deletedRecipe[0].addedBy === username) {
+      await Recipe.findByIdAndDelete(recipeId);
+      // returns all the recipes
+      const updatedRecipes = await Recipe.find();
+      const updatedCuisines = await Recipe.find().distinct('cuisine');
+      res.send({
+        deletedRecipe: deletedRecipe,
+        allRecipes: updatedRecipes,
+        allCuisines: updatedCuisines,
+      });
+    }
+  } catch (err) {
+    res
+      .status(404)
+      .send({message: err.message, error: 'error deleting recipe'});
   }
 });
 

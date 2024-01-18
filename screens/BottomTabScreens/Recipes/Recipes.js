@@ -55,19 +55,10 @@ const Recipes = () => {
   //   console.log('ip', ip);
   // }
   // console.log(allRecipes, 'all Recipes');
+
   useEffect(() => {
     async function getRecipes() {
-      // get all the Recipes
-      if (allRecipes && cuisine === null) {
-        // try {
-        //   await axios
-        //     .get(`http://${localhost}:3000/recipes/`)
-        //     .then(res => setAllRecipes(res.data));
-        // } catch (err) {
-        //   console.error({error: err.message});
-        // }
-        // console.log(allRecipes);
-      } else if (cuisine !== null) {
+      if (cuisine !== null) {
         try {
           await axios
             // I had the colons so it wasn't working
