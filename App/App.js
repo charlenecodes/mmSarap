@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {StatusBar, useColorScheme} from 'react-native';
+import {StatusBar, useColorScheme, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Stacks from '../Navigation/Stacks/Stacks';
 import {AuthContext} from '../Context/authContext';
 import axios from 'axios';
+import Toast from 'react-native-toast-message';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -95,7 +96,7 @@ function App() {
   const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 
   useEffect(() => {
-    async function getRecipes() {
+    async function getAllRecipes() {
       // get all the Recipes
       if (cuisine === null && allRecipes === null) {
         try {
@@ -107,7 +108,7 @@ function App() {
         }
       }
     }
-    getRecipes();
+    getAllRecipes();
   }, [cuisine]);
 
   return (
@@ -138,6 +139,7 @@ function App() {
           <Stacks />
         </NavigationContainer>
       </SafeAreaProvider>
+      <Toast />
     </AuthContext.Provider>
   );
 }

@@ -22,12 +22,16 @@ const Home = ({navigation}) => {
 
   const isDark = colorScheme === 'dark';
 
-  const {setCuisine, currentUser, isLoggedIn, favorites} =
-    useContext(AuthContext);
+  const {
+    setCuisine,
+    cuisines,
+    setCuisines,
+    cuisine,
+    currentUser,
+    isLoggedIn,
+    favorites,
+  } = useContext(AuthContext);
 
-  const [recipes, setRecipes] = useState(null);
-
-  const [cuisines, setCuisines] = useState(null);
   const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 
   useEffect(() => {
@@ -43,7 +47,7 @@ const Home = ({navigation}) => {
       }
     }
     getCuisines();
-  }, [cuisines]);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -146,7 +150,6 @@ const Home = ({navigation}) => {
                 <Pressable
                   onPress={() => {
                     navigation.navigate('Recipes');
-                    console.log(`${cuisine} was pressed`);
                     setCuisine(cuisine);
                   }}>
                   <View

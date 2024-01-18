@@ -1,16 +1,27 @@
-import {Text, View, ScrollView, Pressable, TextInput} from 'react-native';
-import React, {useState, useEffect, useContext} from 'react';
+import {Text, View, ScrollView, TextInput, Dimensions} from 'react-native';
+import React, {useState, useContext} from 'react';
 import {styles} from './AddRecipe.styles';
 import axios from 'axios';
 import CustomButton from '../../../components/CustomButton/CustomButton';
 import RecipeCard from '../../../components/RecipeCard/RecipeCard';
 import H2 from '../../../components/Headers/H2';
-import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../../../Context/authContext';
+import Toast from 'react-native-toast-message';
 
-const AddRecipe = () => {
-  const {currentUser, isLoggedIn} = useContext(AuthContext);
-  const navigation = useNavigation();
+const AddRecipe = ({navigation}) => {
+  const {currentUser, setCuisines, setAllRecipes} = useContext(AuthContext);
+
+  const showToast = () => {
+    const windowHeight = Dimensions.get('window').height;
+
+    Toast.show({
+      type: 'success',
+      text1: 'Recipe was added successfully!',
+      position: 'bottom',
+      bottomOffset: windowHeight / 8,
+      swipeable: true,
+    });
+  };
 
   // ^ CHECK THIS SINCE IT HAS TO MATCH THE BACKEND
   const [recipe, setRecipe] = useState({
@@ -27,7 +38,6 @@ const AddRecipe = () => {
 
   async function addRecipe() {
     let data = JSON.stringify(recipe);
-    console.log(data, 'from addRecipe');
 
     let config = {
       method: 'post',
@@ -42,7 +52,8 @@ const AddRecipe = () => {
     axios
       .request(config)
       .then(response => {
-        console.log(JSON.stringify(response.data));
+        setAllRecipes(response.data.allRecipes);
+        setCuisines(response.data.allCuisines);
       })
       .then(
         setRecipe({
@@ -52,8 +63,15 @@ const AddRecipe = () => {
           instructions: '',
         }),
       )
+      .then(() => {
+        showToast();
+        setTimeout(() => {
+          navigation.navigate('Profile');
+        }, 1200);
+      })
+
       .catch(error => {
-        console.log(error);
+        console.error({error: `${error.message}, error adding recipe`});
       });
   }
 
@@ -73,7 +91,6 @@ const AddRecipe = () => {
   // we use split to turn the string into an array
   const handleChangeArray = (name, text) => {
     const stringToArray = text.split(', ');
-    console.log(stringToArray);
     setRecipe({
       ...recipe,
       [name]: stringToArray,
@@ -82,10 +99,6 @@ const AddRecipe = () => {
 
   // once we have the recipe object we can make a post request with axios
   const handleSubmit = () => {
-    // up here add the code to add the recipe to the database
-    // if there is an error should this be handled here or in the backend then just display the error in the frontend?
-    // navigation.navigate('Recipes')
-    console.log('recipe', recipe);
     addRecipe();
   };
 

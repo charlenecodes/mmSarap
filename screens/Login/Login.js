@@ -6,17 +6,26 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {styles} from './Login.styles';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import {AuthContext} from '../../Context/authContext';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 // enable focus and submit on enter
 function Login() {
-  const {setCurrentUser, setIsLoggedIn} = useContext(AuthContext);
+  const {setCurrentUser, setIsLoggedIn, currentUser} = useContext(AuthContext);
   const navigation = useNavigation();
+
+  const showToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: 'Check you username and password!',
+      position: 'bottom',
+    });
+  };
 
   const [login, setLogin] = useState({
     username: '',
@@ -50,15 +59,14 @@ function Login() {
       .request(config)
       .then(response => {
         // object of the user info is in response.data
-        // Welcome, /user/! is from response.data.message
         setCurrentUser(response.data.currentUser);
         setIsLoggedIn(true);
+        navigation.navigate('Home');
       })
       .catch(error => {
         console.log(error);
+        showToast();
       });
-
-    navigation.navigate('Home');
   };
 
   return (
@@ -82,7 +90,7 @@ function Login() {
               name="password"
               value={login.password}
               onChangeText={text => handleChange('password', text)}
-              style={styles.input}
+              style={[styles.input, {marginBottom: 10}]}
               secureTextEntry={true}
               textContentType="password"
               placeholder="password"

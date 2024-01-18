@@ -30,7 +30,6 @@ export default function FilterButton() {
     <View style={styles.container}>
       {cuisine && (
         <Pressable
-          // ^ HOW TO MAKE THE STYLING ADAPT TO WHETHER IT WAS CLICKED OR NOT
           style={styles.buttonSelected}
           onPress={() => {
             setCuisine(null);
@@ -52,7 +51,7 @@ export default function FilterButton() {
           </View>
         </Pressable>
       )}
-      {cuisine === null &&
+      {!cuisine &&
         cuisines.map((cuisine, index) => {
           return (
             <Pressable
