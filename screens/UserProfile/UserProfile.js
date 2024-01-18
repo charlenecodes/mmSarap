@@ -72,7 +72,7 @@ const UserProfile = ({route, navigation}) => {
               flex: 1,
             }}>
             {/* DISPLAY THE LOGGED IN USERS RECIPES HERE */}
-            {userRecipes.map((recipe, index) => {
+            {userRecipes.reverse().map((recipe, index) => {
               recipe.createdBy === username;
               return (
                 <Pressable

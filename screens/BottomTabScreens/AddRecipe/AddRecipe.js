@@ -1,4 +1,4 @@
-import {Text, View, ScrollView, TextInput} from 'react-native';
+import {Text, View, ScrollView, TextInput, Dimensions} from 'react-native';
 import React, {useState, useContext} from 'react';
 import {styles} from './AddRecipe.styles';
 import axios from 'axios';
@@ -12,10 +12,14 @@ const AddRecipe = ({navigation}) => {
   const {currentUser, setCuisines, setAllRecipes} = useContext(AuthContext);
 
   const showToast = () => {
+    const windowHeight = Dimensions.get('window').height;
+
     Toast.show({
       type: 'success',
       text1: 'Recipe was added successfully!',
-      position: 'top',
+      position: 'bottom',
+      bottomOffset: windowHeight / 8,
+      swipeable: true,
     });
   };
 
@@ -59,8 +63,13 @@ const AddRecipe = ({navigation}) => {
           instructions: '',
         }),
       )
-      .then(showToast())
-      .then(navigation.navigate('Profile'))
+      .then(() => {
+        showToast();
+        setTimeout(() => {
+          navigation.navigate('Profile');
+        }, 1200);
+      })
+
       .catch(error => {
         console.error({error: `${error.message}, error adding recipe`});
       });
@@ -82,7 +91,6 @@ const AddRecipe = ({navigation}) => {
   // we use split to turn the string into an array
   const handleChangeArray = (name, text) => {
     const stringToArray = text.split(', ');
-    console.log(stringToArray);
     setRecipe({
       ...recipe,
       [name]: stringToArray,

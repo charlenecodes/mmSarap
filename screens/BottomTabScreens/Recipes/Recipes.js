@@ -9,7 +9,8 @@ import {useNetInfo} from '@react-native-community/netinfo';
 import {AuthContext} from '../../../Context/authContext';
 
 const Recipes = () => {
-  const {recipes, cuisine, allRecipes, setRecipes} = useContext(AuthContext);
+  const {recipes, cuisine, cuisines, allRecipes, setRecipes} =
+    useContext(AuthContext);
 
   const size = 20;
   const color = '#3A865A';

@@ -51,7 +51,7 @@ export default function FilterButton() {
           </View>
         </Pressable>
       )}
-      {cuisine === null &&
+      {!cuisine &&
         cuisines.map((cuisine, index) => {
           return (
             <Pressable

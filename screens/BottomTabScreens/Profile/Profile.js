@@ -17,14 +17,17 @@ import Toast from 'react-native-toast-message';
 
 // This should display all the recipes from the logged in user like an instagram grid
 const Profile = ({navigation}) => {
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
   const showToast = () => {
     Toast.show({
       type: 'success',
       text1: 'Recipe successfully deleted!',
-      position: 'top',
+      position: 'bottom',
+      bottomOffset: windowHeight / 8,
+      swipeable: true,
     });
   };
-  const windowWidth = Dimensions.get('window').width;
   const {
     allRecipes,
     setCuisines,
@@ -76,7 +79,11 @@ const Profile = ({navigation}) => {
           setAllRecipes(res.data.allRecipes);
           setCuisines(res.data.allCuisines);
         })
-        .then(showToast());
+        .then(
+          setTimeout(() => {
+            showToast();
+          }, 1000),
+        );
     } catch (err) {
       console.error({
         error: `${err.message}, error deleting ${name} from Profile`,
@@ -138,7 +145,7 @@ const Profile = ({navigation}) => {
                   flex: 1,
                 }}>
                 {/* DISPLAY THE LOGGED IN USERS RECIPES HERE */}
-                {userRecipes.map((recipe, index) => {
+                {userRecipes.reverse().map((recipe, index) => {
                   recipe.createdBy === currentUser.username;
                   return (
                     <View key={index}>
