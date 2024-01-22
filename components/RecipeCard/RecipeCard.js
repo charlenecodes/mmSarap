@@ -4,6 +4,7 @@ import PressableHeader from '../PressableHeader/PressableHeader';
 import {styles} from './RecipeCard.styles';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {AuthContext} from '../../Context/authContext';
+import Favorites from '../../screens/Favorites/Favorites';
 
 // This is what we
 export default function RecipeCard({
@@ -15,24 +16,9 @@ export default function RecipeCard({
 }) {
   // how to use this so all the favorite recipes can be shown in one place?
 
-  const {isFavorite, addToFavorites, removeFromFavorites, toggleFavorite} =
-    useContext(AuthContext);
+  const {favorites, currentUser, toggleFavorite} = useContext(AuthContext);
 
   // ^need to work on favorites
-  useEffect(() => {
-    // if (!isFavorite) {
-    //   console.log(recipe);
-    //   setFavorites([
-    //     ...favorites,
-    //     {
-    //       id: recipe._id,
-    //       dishName: recipe.dishName,
-    //     },
-    //   ]);
-    // } else {
-    //   console.log('here are the favorites', favorites);
-    // }
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -58,18 +44,27 @@ export default function RecipeCard({
             onPress={onPressRecipe}
             instructions={recipe.instructions}
           />
-          <Pressable
-            onPress={() => {
-              toggleFavorite(recipe.dishName, recipe._id);
-            }}>
-            <Octicons
-              name={isFavorite ? 'heart-fill' : 'heart'}
-              size={25}
-              color={isFavorite ? 'tomato' : 'gray'}
-            />
-          </Pressable>
+          {currentUser.username && (
+            <Pressable
+              onPress={() => {
+                toggleFavorite(recipe);
+              }}>
+              <Octicons
+                name={
+                  favorites.some(favorite => favorite === recipe)
+                    ? 'heart-fill'
+                    : 'heart'
+                }
+                size={25}
+                color={
+                  favorites.some(favorite => favorite === recipe)
+                    ? 'tomato'
+                    : 'gray'
+                }
+              />
+            </Pressable>
+          )}
         </View>
-
         <Pressable onPress={onPressUsername}>
           <Text style={[styles.text, {color: 'gray'}]}>
             by <Text style={styles.username}>{recipe.addedBy}</Text>

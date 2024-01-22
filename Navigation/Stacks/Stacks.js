@@ -19,7 +19,8 @@ const Stacks = () => {
   const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
 
-  const {toggleFavorite, isFavorite} = useContext(AuthContext);
+  const {} = useContext(AuthContext);
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -75,15 +76,6 @@ const Stacks = () => {
             </Text>
           ),
           presentation: 'modal',
-          headerLeft: () => (
-            <Pressable onPress={toggleFavorite}>
-              <Octicons
-                name={isFavorite ? 'heart-fill' : 'heart'}
-                size={25}
-                color={isFavorite ? 'tomato' : 'white'}
-              />
-            </Pressable>
-          ),
           headerRight: () => (
             <Pressable onPress={() => navigation.goBack()}>
               <AntDesign name={'close'} color={'white'} size={30} />

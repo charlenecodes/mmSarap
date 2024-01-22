@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const os = require('os');
 
 // * IMPORTANT to be able to use mongoose queries
 const User = require('../models/User');
@@ -36,9 +37,13 @@ async function checkIfUsernameExists(req, res, next) {
   }
 }
 
-//^ GET home page - show recently added
-router.get('/', function (req, res) {
-  res.send({greeting: 'Home page'});
+//^ GET IP
+router.get('/ip', function (req, res) {
+  const networkInterfaces = os.networkInterfaces();
+  const ip = networkInterfaces['eth0'][0]['address'];
+  if (ip) {
+    res.send(ip);
+  }
 });
 
 // ^ POST register a user

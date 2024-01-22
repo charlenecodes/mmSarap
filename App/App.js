@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {StatusBar, useColorScheme, View} from 'react-native';
+import {Platform, StatusBar, useColorScheme, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Stacks from '../Navigation/Stacks/Stacks';
 import {AuthContext} from '../Context/authContext';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,58 +27,27 @@ function App() {
   // array that contains the favorites
   const [favorites, setFavorites] = useState([]);
 
-  // returns a boolean whether a recipe is favorited or not
-  const [isFavorite, setIsFavorite] = useState(false);
+  const toggleFavorite = recipe => {
+    // ^TOGGLE FAVORITE IS TRIGGRED WHEN THE HEART IN RECIPE CARD IS CLICKED
 
-  const toggleFavorite = (name, id) => {
-    setIsFavorite(!isFavorite);
-
-    const recipeObject = {
-      id: id,
-      dishName: name,
-    };
-
-    const isInFavoritesArray = favorites.filter(
-      favorite => favorite === recipeObject,
-    );
-
-    console.log(isInFavoritesArray);
-  };
-
-  const addToFavorites = (name, id) => {
-    // console.log({name, id}, 'was added to favorite!');
-    // have a filter here that checks whether the id is already on the favorites, if not then continue adding to favorites
-
-    const recipeObject = {
-      id: id,
-      dishName: name,
-    };
-
-    const isInFavoritesArray = favorites.filter(
-      favorite => favorite === recipeObject,
-    );
-    console.log(isInFavoritesArray, name, 'is already in favorites');
-    if (!isInFavoritesArray) {
-      setIsFavorite(true);
-
-      setFavorites(favorites => [...favorites, recipeObject]);
+    // ^ check if already in the favorites - depending on what this result is then we decide which action to take
+    if (!favorites.some(favorite => favorite === recipe)) {
+      addToFavorites(recipe);
+    } else {
+      removeFromFavorites(recipe);
     }
   };
 
-  const removeFromFavorites = (name, id) => {
-    const recipeObject = {
-      id: id,
-      dishName: name,
-    };
+  const addToFavorites = recipe => {
+    setFavorites([...favorites, recipe]);
+  };
 
-    const isInFavoritesArray = favorites.filter(
-      favorite => favorite === recipeObject,
-    );
+  useEffect(() => {
+    console.log(favorites);
+  }, [favorites]);
 
-    console.log(isInFavoritesArray, 'from Remove');
-    if (isInFavoritesArray) {
-      setIsFavorite(false);
-    }
+  const removeFromFavorites = recipe => {
+    setFavorites(favorites.filter(favorite => favorite !== recipe));
   };
 
   // useColorScheme() is a React hook that checks whether the device is in dark or light mode
@@ -94,6 +64,9 @@ function App() {
     setIsLoggedIn(false);
   };
   const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+
+  const ip = useNetInfo()?.details?.ipAddress;
+  // console.log(useNetInfo());
 
   useEffect(() => {
     async function getAllRecipes() {
