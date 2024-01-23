@@ -166,7 +166,7 @@ const Profile = ({navigation}) => {
                             flex: 1,
                             flexGrow: 1,
                           }}>
-                          <View
+                          {/* <View
                             style={[
                               styles.icons,
                               {
@@ -190,7 +190,7 @@ const Profile = ({navigation}) => {
                                 size={30}
                               />
                             </Pressable>
-                          </View>
+                          </View> */}
 
                           <Text
                             style={{
