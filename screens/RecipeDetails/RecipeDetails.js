@@ -5,6 +5,7 @@ import H2 from '../../components/Headers/H2';
 import H1 from '../../components/Headers/H1';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import axios from 'axios';
+import CapitalizeText from '../../components/CapitalizeText/CapitalizeText';
 
 export default function RecipeDetails({route, navigation}) {
   // recipe contains the whole object, which cannot be displayed
@@ -34,7 +35,7 @@ export default function RecipeDetails({route, navigation}) {
     <ScrollView style={styles.container}>
       <Image source={require('../../images/lumpia.jpg')} style={styles.cover} />
 
-      <H1 text={recipe.dishName} />
+      <H1 text={recipe.dishName} fontSize={28} color={'#3A865A'} />
 
       <Pressable
         onPress={() =>

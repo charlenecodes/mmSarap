@@ -151,24 +151,24 @@ const Home = ({navigation}) => {
           return (
             <View key={index}>
               <ScrollView horizontal={true}>
-                <View
-                  style={{
-                    margin: 5,
-                    padding: 5,
-                    width: 160,
-                    height: 160,
-                    paddingHorizontal: 8,
-                    borderWidth: 2,
-                    borderColor: '#3A865A',
-                    backgroundColor: '#3A865A',
-                    borderTopRightRadius: 20,
-                  }}>
-                  <Pressable
-                    onPress={() =>
-                      navigation.navigate('Recipe Details', {
-                        recipe: favorite,
-                      })
-                    }>
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate('Recipe Details', {
+                      recipe: favorite,
+                    })
+                  }>
+                  <View
+                    style={{
+                      margin: 5,
+                      padding: 5,
+                      width: 160,
+                      height: 160,
+                      paddingHorizontal: 8,
+                      borderWidth: 2,
+                      borderColor: '#3A865A',
+                      backgroundColor: '#3A865A',
+                      borderTopRightRadius: 20,
+                    }}>
                     <View>
                       <Text
                         style={{
@@ -180,8 +180,8 @@ const Home = ({navigation}) => {
                           favorite.dishName.substring(1)}
                       </Text>
                     </View>
-                  </Pressable>
-                </View>
+                  </View>
+                </Pressable>
               </ScrollView>
             </View>
           );
