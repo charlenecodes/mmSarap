@@ -35,13 +35,14 @@ const Profile = ({navigation}) => {
     setRecipes,
     isLoggedIn,
     currentUser,
+    favorites,
   } = useContext(AuthContext);
 
   // this returns the amount of recipes this specific user has posted
   const numberOfRecipes = allRecipes?.filter(
     recipe => recipe.addedBy === currentUser.username,
   ).length;
-  const numberOfFavorites = 0;
+  const numberOfFavorites = favorites.length;
 
   // this returns the recipes this specific user has posted
   const userRecipes = allRecipes?.filter(

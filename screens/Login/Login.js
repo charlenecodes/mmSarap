@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   ScrollView,
   KeyboardAvoidingView,
+  Dimensions,
 } from 'react-native';
 import React, {useState, useContext} from 'react';
 import {styles} from './Login.styles';
@@ -16,14 +17,17 @@ import Toast from 'react-native-toast-message';
 
 // enable focus and submit on enter
 function Login() {
-  const {setCurrentUser, setIsLoggedIn, currentUser} = useContext(AuthContext);
+  const {setCurrentUser, setIsLoggedIn} = useContext(AuthContext);
   const navigation = useNavigation();
+  const windowHeight = Dimensions.get('window').height;
 
   const showToast = () => {
     Toast.show({
       type: 'error',
-      text1: 'Check you username and password!',
+      text1: 'Check your username and password!',
       position: 'bottom',
+      bottomOffset: windowHeight / 8,
+      swipeable: true,
     });
   };
 

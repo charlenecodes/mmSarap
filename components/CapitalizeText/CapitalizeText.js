@@ -1,10 +1,10 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-export default function H1({text, fontSize, color}) {
+export default function CapitalizeText({text, fontSize, color}) {
   return (
     <View>
-      <Text style={[styles.h1, {fontSize: fontSize, color: color}]}>
+      <Text style={[styles.text, {fontSize: fontSize, color: color}]}>
         {text[0].toUpperCase() + text.substring(1)}
       </Text>
     </View>
@@ -12,8 +12,7 @@ export default function H1({text, fontSize, color}) {
 }
 
 const styles = StyleSheet.create({
-  h1: {
+  text: {
     marginVertical: 3,
-    fontWeight: 'bold',
   },
 });
