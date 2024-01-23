@@ -1,11 +1,12 @@
 import {View, ScrollView, Text, Image, Pressable} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {styles} from './RecipeDetails.styles';
 import H2 from '../../components/Headers/H2';
 import H1 from '../../components/Headers/H1';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import axios from 'axios';
-import CapitalizeText from '../../components/CapitalizeText/CapitalizeText';
+import Octicons from 'react-native-vector-icons/Octicons';
+import {AuthContext} from '../../Context/authContext';
 
 export default function RecipeDetails({route, navigation}) {
   // recipe contains the whole object, which cannot be displayed
@@ -16,6 +17,7 @@ export default function RecipeDetails({route, navigation}) {
   const [recipes, setRecipes] = useState(null);
 
   const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+  const {favorites, toggleFavorite, currentUser} = useContext(AuthContext);
 
   useEffect(() => {
     async function getRecipes() {
@@ -33,9 +35,31 @@ export default function RecipeDetails({route, navigation}) {
 
   return (
     <ScrollView style={styles.container}>
-      <Image source={require('../../images/lumpia.jpg')} style={styles.cover} />
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <H1 text={recipe.dishName} fontSize={25} color={'#3A865A'} />
 
-      <H1 text={recipe.dishName} fontSize={28} color={'#3A865A'} />
+        {currentUser.username && (
+          <Pressable
+            style={{margin: 3}}
+            onPress={() => {
+              toggleFavorite(recipe);
+            }}>
+            <Octicons
+              name={
+                favorites.some(favorite => favorite === recipe)
+                  ? 'heart-fill'
+                  : 'heart'
+              }
+              size={25}
+              color={
+                favorites.some(favorite => favorite === recipe)
+                  ? 'tomato'
+                  : 'gray'
+              }
+            />
+          </Pressable>
+        )}
+      </View>
 
       <Pressable
         onPress={() =>
@@ -47,6 +71,15 @@ export default function RecipeDetails({route, navigation}) {
           by <Text style={styles.username}>{recipe.addedBy}</Text>
         </Text>
       </Pressable>
+
+      {currentUser.username &&
+        !favorites.some(favorite => favorite === recipe) && (
+          <Text style={{color: 'gray', marginVertical: 5, textAlign: 'left'}}>
+            <Octicons name={'heart'} size={16} color={'gray'} /> to add to
+            favorites!
+          </Text>
+        )}
+      <Image source={require('../../images/lumpia.jpg')} style={styles.cover} />
 
       <Text>
         <H2 text={'Ingredients'} /> {'\n-'} {recipe.ingredients.join('\n- ')}
