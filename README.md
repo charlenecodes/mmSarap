@@ -15,8 +15,17 @@ This is an ongoing project with new features to be added.
 - For logged in users
   - Preview your user profile that displays all your recipe
   - See recipes that are added to favorites in the Home screen
-  - Add/remove your recipe from favorites
+  - Add/remove a recipe from favorites
   - Add/delete your recipe from the app
+
+      https://github.com/charlenecodes/mmSarap/assets/105036972/7b22c1cd-e5f0-4159-b4b3-cbe7bd87bd11
+    
+      https://github.com/charlenecodes/mmSarap/assets/105036972/aa9112b8-00f1-442a-a345-4da7027a89ee
+
+      https://github.com/charlenecodes/mmSarap/assets/105036972/ec43b995-88be-4a88-b1b1-dcebf8c67e93
+
+
+
 
 ### Technologies
 
