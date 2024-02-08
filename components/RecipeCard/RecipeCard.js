@@ -4,7 +4,6 @@ import PressableHeader from '../PressableHeader/PressableHeader';
 import {styles} from './RecipeCard.styles';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {AuthContext} from '../../Context/authContext';
-import Favorites from '../../screens/Favorites/Favorites';
 
 // This is what we
 export default function RecipeCard({

@@ -4,39 +4,24 @@ import {styles} from './RecipeDetails.styles';
 import H2 from '../../components/Headers/H2';
 import H1 from '../../components/Headers/H1';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
-import axios from 'axios';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {AuthContext} from '../../Context/authContext';
+import useRecipes from '../../hooks/useRecipes';
 
 export default function RecipeDetails({route, navigation}) {
   // recipe contains the whole object, which cannot be displayed
   // this is the specific recipe that the user clicked on from the Recipes page
-  const recipe = route.params.recipe;
-  const username = route.params.recipe.addedBy;
-  const currentDish = route.params.recipe.dishName;
-  const [recipes, setRecipes] = useState(null);
+  const recipe = route?.params?.recipe;
+  const username = route?.params?.recipe?.addedBy;
+  const currentDish = route?.params?.recipe?.dishName;
 
-  const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
   const {favorites, toggleFavorite, currentUser} = useContext(AuthContext);
-
-  useEffect(() => {
-    async function getRecipes() {
-      try {
-        // it wasn't working because it was https and I had a typo before 3000
-        await axios
-          .get(`http://${localhost}:3000/recipes/`)
-          .then(res => setRecipes(res.data));
-      } catch (err) {
-        console.error({error: err.message});
-      }
-    }
-    getRecipes();
-  }, []);
+  const {allRecipes} = useRecipes();
 
   return (
     <ScrollView style={styles.container}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <H1 text={recipe.dishName} fontSize={25} color={'#3A865A'} />
+        <H1 text={recipe?.dishName} fontSize={25} color={'#3A865A'} />
 
         {currentUser.username && (
           <Pressable
@@ -68,7 +53,7 @@ export default function RecipeDetails({route, navigation}) {
           })
         }>
         <Text>
-          by <Text style={styles.username}>{recipe.addedBy}</Text>
+          by <Text style={styles.username}>{recipe?.addedBy}</Text>
         </Text>
       </Pressable>
 
@@ -82,11 +67,11 @@ export default function RecipeDetails({route, navigation}) {
       <Image source={require('../../images/lumpia.jpg')} style={styles.cover} />
 
       <Text>
-        <H2 text={'Ingredients'} /> {'\n-'} {recipe.ingredients.join('\n- ')}
+        <H2 text={'Ingredients'} /> {'\n-'} {recipe?.ingredients.join('\n- ')}
       </Text>
       <Text>
         {' '}
-        <H2 text={'Instructions'} /> {'\n-'} {recipe.instructions.join('\n- ')}
+        <H2 text={'Instructions'} /> {'\n-'} {recipe?.instructions.join('\n- ')}
       </Text>
 
       <View style={styles.suggestions}>
@@ -102,7 +87,7 @@ export default function RecipeDetails({route, navigation}) {
 
         const recipesFromUser = recipes?.filter((recipe) => recipe.addedBy === username && recipe.dishName !== currentDish).map((recipe) => recipe)
         */}
-        {recipes
+        {/* {allRecipes
           ?.filter(
             recipe =>
               recipe.addedBy === username && recipe.dishName !== currentDish,
@@ -113,7 +98,7 @@ export default function RecipeDetails({route, navigation}) {
                 <RecipeCard
                   recipe={recipe}
                   // need to send an onPress so that the person can continue clicking to the next page, but not sure how this works
-                  // onPressRecipe={navigation.push('Recipe Details', {
+                  // onPressRecipe={navigation.navigate('Recipe Details', {
                   //   params: {
                   //     recipe: recipe,
                   //   },
@@ -123,7 +108,7 @@ export default function RecipeDetails({route, navigation}) {
                 />
               </View>
             );
-          })}
+          })} */}
       </View>
     </ScrollView>
   );

@@ -3,18 +3,16 @@ import React, {useState, useEffect, useContext} from 'react';
 import {styles} from './UserProfile.styles';
 import axios from 'axios';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {AuthContext} from '../../Context/authContext';
-
+import useRecipes from '../../hooks/useRecipes';
 // This should display all the recipes similar to profile, but this will be when the logged in user clicks on the username from the Recipes tab
 const UserProfile = ({route, navigation}) => {
   const username = route?.params?.username;
-  const [recipes, setRecipes] = useState(null);
 
-  const {allRecipes} = useContext(AuthContext);
+  const {allRecipes} = useRecipes();
   const windowWidth = Dimensions.get('window').width;
 
   // this returns the amount of recipes this specific user has posted
-  const numberOfRecipes = recipes?.filter(
+  const numberOfRecipes = allRecipes?.filter(
     recipe => recipe.addedBy === username,
   ).length;
   const numberOfFavorites = 0;
@@ -23,19 +21,6 @@ const UserProfile = ({route, navigation}) => {
 
   // this returns the recipes this specific user has posted
   const userRecipes = allRecipes?.filter(recipe => recipe.addedBy === username);
-
-  useEffect(() => {
-    async function getRecipes() {
-      try {
-        await axios
-          .get(`http://${localhost}:3000/recipes/`)
-          .then(res => setRecipes(res.data));
-      } catch (err) {
-        console.error({error: err.message});
-      }
-    }
-    getRecipes();
-  }, []);
 
   return (
     <ScrollView style={styles.container}>

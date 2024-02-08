@@ -5,14 +5,11 @@ import Register from '../../screens/Register/Register';
 import Users from '../../screens/Users/Users';
 import UserProfile from '../../screens/UserProfile/UserProfile';
 import BottomTab from '../BottomTab/BottomTab';
-import Favorites from '../../screens/Favorites/Favorites';
-import Login from '../../screens/Login/Login';
 import RecipeDetails from '../../screens/RecipeDetails/RecipeDetails';
 import Recents from '../../screens/Recents/Recents';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../../Context/authContext';
-import Octicons from 'react-native-vector-icons/Octicons';
 
 const Stacks = () => {
   // create a forgot password screen and API
@@ -49,15 +46,6 @@ const Stacks = () => {
       />
       <Stack.Screen name="Users" component={Users} />
       <Stack.Screen
-        name="Favorites"
-        component={Favorites}
-        options={{
-          headerShown: true,
-          headerTitle: 'Favorites',
-        }}
-      />
-
-      <Stack.Screen
         name="Recipe Details"
         component={RecipeDetails}
         options={({route}) => ({
@@ -71,8 +59,8 @@ const Stacks = () => {
                 fontSize: 17,
                 fontWeight: 600,
               }}>
-              {route.params.recipe.dishName[0].toUpperCase() +
-                route.params.recipe.dishName.substring(1)}
+              {route?.params?.recipe?.dishName[0].toUpperCase() +
+                route?.params?.recipe?.dishName.substring(1)}
             </Text>
           ),
           presentation: 'modal',

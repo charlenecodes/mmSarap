@@ -7,9 +7,13 @@ import RecipeCard from '../../../components/RecipeCard/RecipeCard';
 import H2 from '../../../components/Headers/H2';
 import {AuthContext} from '../../../Context/authContext';
 import Toast from 'react-native-toast-message';
+import useRecipes from '../../../hooks/useRecipes';
+import useCuisines from '../../../hooks/useCuisines';
 
 const AddRecipe = ({navigation}) => {
-  const {currentUser, setCuisines, setAllRecipes} = useContext(AuthContext);
+  const {currentUser} = useContext(AuthContext);
+  const {setAllRecipes} = useRecipes();
+  const {setAllCuisines} = useCuisines();
 
   const showToast = () => {
     const windowHeight = Dimensions.get('window').height;
@@ -53,7 +57,7 @@ const AddRecipe = ({navigation}) => {
       .request(config)
       .then(response => {
         setAllRecipes(response.data.allRecipes);
-        setCuisines(response.data.allCuisines);
+        setAllCuisines(response.data.allCuisines);
       })
       .then(
         setRecipe({
