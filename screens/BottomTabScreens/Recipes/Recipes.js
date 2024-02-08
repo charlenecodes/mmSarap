@@ -43,7 +43,7 @@ const Recipes = () => {
         <FilterButton />
       </ScrollView>
       {!cuisineSelected
-        ? allRecipes.map(recipe => {
+        ? allRecipes?.map(recipe => {
             // was not showing on the screen because I didn't have the return keyword
             return (
               <View key={recipe._id}>

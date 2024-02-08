@@ -8,7 +8,7 @@ import useRecipes from '../../hooks/useRecipes';
 const UserProfile = ({route, navigation}) => {
   const username = route?.params?.username;
 
-  const {allRecipes, setAllRecipes} = useRecipes();
+  const {allRecipes} = useRecipes();
   const windowWidth = Dimensions.get('window').width;
 
   // this returns the amount of recipes this specific user has posted

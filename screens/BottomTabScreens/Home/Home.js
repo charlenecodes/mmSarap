@@ -120,15 +120,15 @@ const Home = ({navigation}) => {
           })}
         </ScrollView>
       </View>
+
       {favorites.length >= 1 && (
         <H1 text={' My Favorite Recipes'} fontSize={20} color={'#3A865A'} />
       )}
-
-      {favorites.length >= 1 &&
-        favorites.map((favorite, index) => {
-          return (
-            <View key={index}>
-              <ScrollView horizontal={true}>
+      <ScrollView horizontal={true}>
+        {favorites.length >= 1 &&
+          favorites.map(favorite => {
+            return (
+              <View key={favorite._id}>
                 <Pressable
                   onPress={() =>
                     navigation.navigate('Recipe Details', {
@@ -160,10 +160,10 @@ const Home = ({navigation}) => {
                     </View>
                   </View>
                 </Pressable>
-              </ScrollView>
-            </View>
-          );
-        })}
+              </View>
+            );
+          })}
+      </ScrollView>
     </SafeAreaView>
   );
 };

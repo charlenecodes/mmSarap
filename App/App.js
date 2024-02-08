@@ -55,26 +55,9 @@ function App() {
     setCurrentUser({});
     setIsLoggedIn(false);
   };
-  const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 
   const ip = useNetInfo()?.details?.ipAddress;
   // console.log(useNetInfo());
-
-  // useEffect(() => {
-  //   async function getAllRecipes() {
-  //     // get all the Recipes
-  //     if (cuisineS === null && allRecipes === null) {
-  //       try {
-  //         await axios
-  //           .get(`http://${localhost}:3000/recipes/`)
-  //           .then(res => setAllRecipes(res.data));
-  //       } catch (err) {
-  //         console.error({error: `Error in App.js ${err.message}`});
-  //       }
-  //     }
-  //   }
-  //   getAllRecipes();
-  // }, [cuisineSelected]);
 
   return (
     <AuthContext.Provider
