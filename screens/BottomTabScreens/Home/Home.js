@@ -11,7 +11,7 @@ import {styles} from './Home.styles';
 import PressableHeader from '../../../components/PressableHeader/PressableHeader';
 import H1 from '../../../components/Headers/H1';
 import {AuthContext} from '../../../Context/authContext';
-import axios from 'axios';
+import useCuisines from '../../../hooks/useCuisines';
 
 const Home = ({navigation}) => {
   const colorScheme = useColorScheme();
@@ -20,32 +20,10 @@ const Home = ({navigation}) => {
 
   const isDark = colorScheme === 'dark';
 
-  const {
-    setCuisine,
-    cuisines,
-    setCuisines,
-    cuisine,
-    currentUser,
-    isLoggedIn,
-    favorites,
-  } = useContext(AuthContext);
+  const {currentUser, isLoggedIn, favorites, setCuisineSelected} =
+    useContext(AuthContext);
 
-  const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
-
-  useEffect(() => {
-    async function getCuisines() {
-      if (!cuisines) {
-        try {
-          await axios
-            .get(`http://${localhost}:3000/recipes/cuisines`)
-            .then(res => setCuisines(res.data));
-        } catch (err) {
-          console.error({error: err.message});
-        }
-      }
-    }
-    getCuisines();
-  }, []);
+  const {allCuisines} = useCuisines();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -105,13 +83,13 @@ const Home = ({navigation}) => {
           color={'#3A865A'}
         />
         <ScrollView horizontal={true}>
-          {cuisines?.map(cuisine => {
+          {allCuisines?.map(cuisine => {
             return (
               <View key={cuisine}>
                 <Pressable
                   onPress={() => {
                     navigation.navigate('Recipes');
-                    setCuisine(cuisine);
+                    setCuisineSelected(cuisine);
                   }}>
                   <View
                     style={{

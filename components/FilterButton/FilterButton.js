@@ -1,39 +1,23 @@
 import {StyleSheet, Text, Pressable, View} from 'react-native';
-import React, {useEffect, useState, useContext} from 'react';
-import axios from 'axios';
+import React, {useContext} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {AuthContext} from '../../Context/authContext';
+import useRecipes from '../../hooks/useRecipes';
+import useCuisines from '../../hooks/useCuisines';
 
 export default function FilterButton() {
-  // returns the different cuisines
-  const {cuisine, setCuisine, cuisines, setCuisines, allRecipes, setRecipes} =
-    useContext(AuthContext);
+  const {cuisineSelected, setCuisineSelected} = useContext(AuthContext);
+  const {allCuisines} = useCuisines();
+  const {allRecipes, setAllRecipes} = useRecipes();
 
-  //^ SEND CUISINE to Recipes.js so that can be used to get the recipes only from the selected cuisine
-  // ^ make it so that when reset filter is clicked then it will just default to showing all recipes
-
-  const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
-
-  useEffect(() => {
-    async function getCuisines() {
-      try {
-        await axios
-          .get(`http://${localhost}:3000/recipes/cuisines`)
-          .then(res => setCuisines(res.data));
-      } catch (err) {
-        console.error({error: err.message});
-      }
-    }
-    getCuisines();
-  }, []);
   return (
     <View style={styles.container}>
-      {cuisine && (
+      {cuisineSelected && (
         <Pressable
           style={styles.buttonSelected}
           onPress={() => {
-            setCuisine(null);
-            setRecipes(allRecipes);
+            setCuisineSelected(null);
+            setAllRecipes(allRecipes);
           }}>
           <View
             style={{
@@ -42,22 +26,18 @@ export default function FilterButton() {
               alignItems: 'center',
               marginRight: 3,
             }}>
-            <Text
-              // try to customize it so that when the button is pressed it will have a different style
-              style={styles.textSelected}>
-              {cuisine}
-            </Text>
+            <Text style={styles.textSelected}>{cuisineSelected}</Text>
             <AntDesign name={'close'} color={'white'} />
           </View>
         </Pressable>
       )}
-      {!cuisine &&
-        cuisines.map((cuisine, index) => {
+      {!cuisineSelected &&
+        allCuisines.map((cuisine, index) => {
           return (
             <Pressable
               key={index}
               onPress={() => {
-                setCuisine(cuisine);
+                setCuisineSelected(cuisine);
               }}
               style={styles.button}>
               <Text style={styles.text}>{cuisine}</Text>

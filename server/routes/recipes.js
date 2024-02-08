@@ -45,19 +45,19 @@ router.get('/:username', async function (req, res) {
 });
 
 // ^ GET favorites by username
-router.get('/:username', async function (req, res) {
-  const {username} = req.params;
+// router.get('/:username/favorites', async function (req, res) {
+//   const {username} = req.params;
 
-  try {
-    let query = await Recipe.find().where('addedBy').equals(username);
-    // .select('recipes')
-    // .populate('recipes');
-    console.log(query, 'from API call');
-    res.send(query);
-  } catch (err) {
-    res.status(404).send({message: err.message});
-  }
-});
+//   try {
+//     let query = await Recipe.find().where('addedBy').equals(username);
+//     // .select('recipes')
+//     // .populate('recipes');
+//     console.log(query, 'from API call');
+//     res.send(query);
+//   } catch (err) {
+//     res.status(404).send({message: err.message});
+//   }
+// });
 
 // ^ POST user's recipes by username
 router.post('/:username', async function (req, res) {

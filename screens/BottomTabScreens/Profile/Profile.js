@@ -6,7 +6,7 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {styles} from './Profile.styles';
 import axios from 'axios';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -14,6 +14,7 @@ import {AuthContext} from '../../../Context/authContext';
 import Login from '../../Login/Login';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Toast from 'react-native-toast-message';
+import useRecipes from '../../../hooks/useRecipes';
 
 // This should display all the recipes from the logged in user like an instagram grid
 const Profile = ({navigation}) => {
@@ -28,15 +29,9 @@ const Profile = ({navigation}) => {
       swipeable: true,
     });
   };
-  const {
-    allRecipes,
-    setCuisines,
-    setAllRecipes,
-    setRecipes,
-    isLoggedIn,
-    currentUser,
-    favorites,
-  } = useContext(AuthContext);
+  const {isLoggedIn, currentUser, favorites} = useContext(AuthContext);
+
+  const {allRecipes, setAllRecipes} = useRecipes();
 
   // this returns the amount of recipes this specific user has posted
   const numberOfRecipes = allRecipes?.filter(
@@ -51,25 +46,7 @@ const Profile = ({navigation}) => {
 
   const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 
-  useEffect(() => {
-    async function getRecipes() {
-      try {
-        await axios
-          .get(`http://${localhost}:3000/recipes/${currentUser.username}`)
-          .then(res => {
-            setRecipes(res.data);
-          });
-      } catch (err) {
-        console.error({
-          error: `${err.message}, error getting user's recipes from Profile`,
-        });
-      }
-    }
-
-    getRecipes();
-  }, [currentUser]);
-
-  async function deleteRecipe(id, name) {
+  async function deleteRecipe(id, dish) {
     try {
       await axios
         .delete(
@@ -87,7 +64,7 @@ const Profile = ({navigation}) => {
         );
     } catch (err) {
       console.error({
-        error: `${err.message}, error deleting ${name} from Profile`,
+        error: `${err.message}, error deleting ${dish} from Profile`,
       });
     }
   }

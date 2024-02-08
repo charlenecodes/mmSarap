@@ -71,8 +71,8 @@ const Stacks = () => {
                 fontSize: 17,
                 fontWeight: 600,
               }}>
-              {route.params.recipe.dishName[0].toUpperCase() +
-                route.params.recipe.dishName.substring(1)}
+              {route?.params?.recipe?.dishName[0].toUpperCase() +
+                route?.params?.recipe?.dishName.substring(1)}
             </Text>
           ),
           presentation: 'modal',

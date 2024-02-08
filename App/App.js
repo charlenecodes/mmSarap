@@ -7,22 +7,14 @@ import {AuthContext} from '../Context/authContext';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import {useNetInfo} from '@react-native-community/netinfo';
+import useRecipes from '../hooks/useRecipes';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
   // returns the clicked cuisine
-  const [cuisine, setCuisine] = useState(null);
-
-  // list of cuisines for Filter button
-  const [cuisines, setCuisines] = useState([]);
-
-  // all recipes before any filter is applied
-  const [allRecipes, setAllRecipes] = useState(null);
-
-  // recipes with filter applied
-  const [recipes, setRecipes] = useState(null);
+  const [cuisineSelected, setCuisineSelected] = useState(null);
 
   // array that contains the favorites
   const [favorites, setFavorites] = useState([]);
@@ -68,41 +60,32 @@ function App() {
   const ip = useNetInfo()?.details?.ipAddress;
   // console.log(useNetInfo());
 
-  useEffect(() => {
-    async function getAllRecipes() {
-      // get all the Recipes
-      if (cuisine === null && allRecipes === null) {
-        try {
-          await axios
-            .get(`http://${localhost}:3000/recipes/`)
-            .then(res => setAllRecipes(res.data));
-        } catch (err) {
-          console.error({error: `Error in App.js ${err.message}`});
-        }
-      }
-    }
-    getAllRecipes();
-  }, [cuisine]);
+  // useEffect(() => {
+  //   async function getAllRecipes() {
+  //     // get all the Recipes
+  //     if (cuisineS === null && allRecipes === null) {
+  //       try {
+  //         await axios
+  //           .get(`http://${localhost}:3000/recipes/`)
+  //           .then(res => setAllRecipes(res.data));
+  //       } catch (err) {
+  //         console.error({error: `Error in App.js ${err.message}`});
+  //       }
+  //     }
+  //   }
+  //   getAllRecipes();
+  // }, [cuisineSelected]);
 
   return (
     <AuthContext.Provider
       value={{
-        allRecipes,
-        setAllRecipes,
-        recipes,
-        setRecipes,
         currentUser,
         setCurrentUser,
         isLoggedIn,
         setIsLoggedIn,
-        cuisine,
-        setCuisine,
-        cuisines,
-        setCuisines,
+        cuisineSelected,
+        setCuisineSelected,
         favorites,
-        setFavorites,
-        addToFavorites,
-        removeFromFavorites,
         toggleFavorite,
         logout,
       }}>

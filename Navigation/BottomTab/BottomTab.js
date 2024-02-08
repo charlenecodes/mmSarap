@@ -13,7 +13,8 @@ import {AuthContext} from '../../Context/authContext';
 // Home, AllRecipes, Add a Recipe, Profile
 export const BottomTab = () => {
   const Tab = createBottomTabNavigator();
-  const {currentUser, isLoggedIn, logout} = useContext(AuthContext);
+  const {currentUser, isLoggedIn, logout, cuisineSelected} =
+    useContext(AuthContext);
 
   return (
     <Tab.Navigator
@@ -50,6 +51,11 @@ export const BottomTab = () => {
         name="Recipes"
         component={Recipes}
         options={{
+          headerTitle: () => (
+            <Text style={{color: 'white', fontWeight: 600, fontSize: 17}}>
+              {cuisineSelected ? `${cuisineSelected} Recipes` : 'All Recipes'}
+            </Text>
+          ),
           tabBarIcon: ({focused}) => (
             <MaterialCommunityIcons
               name="chef-hat"
