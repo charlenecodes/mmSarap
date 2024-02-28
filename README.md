@@ -70,9 +70,8 @@ This was created using the following technologies:
 
 ### Running the Project
 
-- Open two Terminal screens
-  - On the first screen enter `cd server` and then `npm run start` in order to connect to the MongoDB database
-  - On the second screen, the project can be run on either android or ios
+- Open the Terminal
+  - The project can be run on either android or ios. Since the project is using the free tier of Render, it may take a few seconds/minutes to load and update the data.
     - `npm run android` starts building the Android app
     - `npm run ios` starts building the iOS version
     - `npm run ios15` command was also customized in order to load the app on a iPhone 15 simulator
