@@ -15,6 +15,7 @@ import Login from '../../Login/Login';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Toast from 'react-native-toast-message';
 import useRecipes from '../../../hooks/useRecipes';
+import useCuisines from '../../../hooks/useCuisines';
 
 // This should display all the recipes from the logged in user like an instagram grid
 const Profile = ({navigation}) => {
@@ -32,6 +33,7 @@ const Profile = ({navigation}) => {
   const {isLoggedIn, currentUser, favorites} = useContext(AuthContext);
 
   const {allRecipes, setAllRecipes} = useRecipes();
+  const {setAllCuisines} = useCuisines();
 
   // this returns the amount of recipes this specific user has posted
   const numberOfRecipes = allRecipes?.filter(
@@ -53,7 +55,7 @@ const Profile = ({navigation}) => {
         .then(res => {
           // res.data.allRecipes returns ALL the recipes after the specific one was removed
           setAllRecipes(res.data.allRecipes);
-          setCuisines(res.data.allCuisines);
+          setAllCuisines(res.data.allCuisines);
         })
         .then(
           setTimeout(() => {
