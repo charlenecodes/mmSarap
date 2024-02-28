@@ -9,8 +9,7 @@ const useRecipes = () => {
   async function getAllRecipes() {
     try {
       await axios
-        // ^ DB is on Port3000
-        .get(`http://${localhost}:3000/recipes/`)
+        .get(`https://mmsarap.onrender.com/recipes/`)
         .then(res => setAllRecipes(res.data));
     } catch (err) {
       console.error({error: `Error in useRecipes.jsx ${err.message}`});

@@ -1,13 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Platform, StatusBar, useColorScheme, View} from 'react-native';
+import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Stacks from '../Navigation/Stacks/Stacks';
 import {AuthContext} from '../Context/authContext';
-import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import {useNetInfo} from '@react-native-community/netinfo';
-import useRecipes from '../hooks/useRecipes';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,22 +39,10 @@ function App() {
     setFavorites(favorites.filter(favorite => favorite !== recipe));
   };
 
-  // useColorScheme() is a React hook that checks whether the device is in dark or light mode
-  // this code below returns a boolean - true if the device is in dark mode
-  const isDarkMode = useColorScheme() === 'dark';
-
-  // so it looks cleaner within the file you can make it like this and then
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? 'black' : 'white',
-  };
-
   const logout = () => {
     setCurrentUser({});
     setIsLoggedIn(false);
   };
-
-  const ip = useNetInfo()?.details?.ipAddress;
-  // console.log(useNetInfo());
 
   return (
     <AuthContext.Provider

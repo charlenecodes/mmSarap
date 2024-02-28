@@ -1,11 +1,4 @@
-import {
-  View,
-  SafeAreaView,
-  useColorScheme,
-  ScrollView,
-  Text,
-  Pressable,
-} from 'react-native';
+import {View, SafeAreaView, ScrollView, Text, Pressable} from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import {styles} from './Home.styles';
 import PressableHeader from '../../../components/PressableHeader/PressableHeader';
@@ -14,12 +7,6 @@ import {AuthContext} from '../../../Context/authContext';
 import useCuisines from '../../../hooks/useCuisines';
 
 const Home = ({navigation}) => {
-  const colorScheme = useColorScheme();
-
-  // if (colorScheme === 'dark') console.log('dark mode')
-
-  const isDark = colorScheme === 'dark';
-
   const {currentUser, isLoggedIn, favorites, setCuisineSelected} =
     useContext(AuthContext);
 

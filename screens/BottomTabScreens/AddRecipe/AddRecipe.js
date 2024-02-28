@@ -38,15 +38,13 @@ const AddRecipe = ({navigation}) => {
   const howTo =
     'Add a comma followed by a space between ingredients and instructions so they appear on their own line.';
 
-  const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
-
   async function addRecipe() {
     let data = JSON.stringify(recipe);
 
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: `http://${localhost}:3000/recipes/${currentUser.username}/`,
+      url: `https://mmsarap.onrender.com/recipes/${currentUser.username}/`,
       headers: {
         'Content-Type': 'application/json',
       },

@@ -1,7 +1,6 @@
 import {Text, View, ScrollView, Pressable, Dimensions} from 'react-native';
-import React, {useState, useEffect, useContext} from 'react';
+import React from 'react';
 import {styles} from './UserProfile.styles';
-import axios from 'axios';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import useRecipes from '../../hooks/useRecipes';
 // This should display all the recipes similar to profile, but this will be when the logged in user clicks on the username from the Recipes tab
@@ -16,8 +15,6 @@ const UserProfile = ({route, navigation}) => {
     recipe => recipe.addedBy === username,
   ).length;
   const numberOfFavorites = 0;
-
-  const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 
   // this returns the recipes this specific user has posted
   const userRecipes = allRecipes?.filter(recipe => recipe.addedBy === username);
