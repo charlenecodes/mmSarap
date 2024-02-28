@@ -72,26 +72,6 @@ const Stacks = () => {
         })}
       />
       <Stack.Screen name="Recents" component={Recents} />
-      {/* <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{
-          presentation: 'modal',
-          headerRight: () => (
-            <Pressable onPress={() => navigation.goBack()}>
-              <AntDesign name={'close'} color={'white'} size={30} />
-            </Pressable>
-          ),
-          title: 'Login',
-          tabBarIcon: ({focused}) => (
-            <FontAwesome
-              name={focused ? 'user-circle' : 'user-circle-o'}
-              color={focused ? '#3A865A' : 'gray'}
-              size={25}
-            />
-          ),
-        }}
-      /> */}
       <Stack.Screen
         name="Register"
         component={Register}

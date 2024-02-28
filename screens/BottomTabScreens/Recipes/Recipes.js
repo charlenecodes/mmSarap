@@ -1,10 +1,9 @@
-import {View, Platform, ScrollView} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import React, {useContext} from 'react';
 import {styles} from './Recipes.styles';
 import RecipeCard from '../../../components/RecipeCard/RecipeCard';
 import {useNavigation} from '@react-navigation/native';
 import FilterButton from '../../../components/FilterButton/FilterButton';
-import {useNetInfo} from '@react-native-community/netinfo';
 import {AuthContext} from '../../../Context/authContext';
 import useRecipes from '../../../hooks/useRecipes';
 
@@ -17,7 +16,6 @@ const Recipes = () => {
   const navigation = useNavigation();
 
   // There is a big difference with how to connect to the Android emulator and iOS connects to the DB
-  const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 
   // need to place this in  custom hook so it only needs to be imported to use it
   // const netInfo = useNetInfo();

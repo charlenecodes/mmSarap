@@ -1,11 +1,4 @@
-import {
-  Text,
-  View,
-  SafeAreaView,
-  ScrollView,
-  KeyboardAvoidingView,
-  TextInput,
-} from 'react-native';
+import {Text, View, SafeAreaView, ScrollView, TextInput} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './Register.styles';
 import CustomButton from '../../components/CustomButton/CustomButton';
