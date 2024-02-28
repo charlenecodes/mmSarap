@@ -6,6 +6,8 @@ A user does not need an account in order to view any recipes saved in the databa
 
 This is an ongoing project with new features to be added.
 
+For the React.js version, there is GitHub pages here: https://github.com/charlenecodes/mmSarap-web
+
 ### Current Features
 
 - For all users
@@ -36,8 +38,9 @@ This was created using the following technologies:
 - React Native Toast Message
 - MongoDB
 - Mongoose
-- Node.js
+- Node.js/Express
 - Postman
+- Render
 
 ### API Routes
 
